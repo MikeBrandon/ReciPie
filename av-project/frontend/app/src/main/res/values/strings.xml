@@ -8,4 +8,12 @@
     <string name="obThreeTitle">Plan All Your Meals</string>
     <string name="obThreeDescription">Synchronise your pantry, grocery list and recipes automatically using the Meal Planner</string>
     <string name="start">Start</string>
+    <string name="skip">Skip</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="forgot">Forgot Password?</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="conf_password">Confirm Password</string>
+    <string name="mobno">Phone Number</string>
 </resources>

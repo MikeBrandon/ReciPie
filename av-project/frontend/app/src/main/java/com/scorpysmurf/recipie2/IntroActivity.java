@@ -63,7 +63,7 @@ public class IntroActivity extends AppCompatActivity {
                 if(onBoardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
                     onBoardingViewPager.setCurrentItem(onBoardingViewPager.getCurrentItem() + 1);
                 } else {
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(),LoginSignupActivity.class));
                     finish();
                 }
             }

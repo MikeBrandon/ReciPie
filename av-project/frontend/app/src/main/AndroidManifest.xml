@@ -9,6 +9,7 @@
         android:roundIcon="@raw/pink_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReciPie2">
+        <activity android:name=".LoginSignupActivity"></activity>
         <activity android:name=".IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
