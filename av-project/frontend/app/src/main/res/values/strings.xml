@@ -3,8 +3,9 @@
     <string name="next">Next</string>
     <string name="obOneTitle">Become A Master Chef</string>
     <string name="obOneDescription">Download Recipes from the Master Chefs all around the World to fulfill your cravings</string>
-    <string name="obTwoTitle"></string>
-    <string name="obTwoDescription"></string>
-    <string name="obThreeTitle"></string>
-    <string name="obThreeDescription"></string>
+    <string name="obTwoTitle">Organise Your Pantry</string>
+    <string name="obTwoDescription">Spend less time thinking about what you forgot to buy and Spend more time Cooking</string>
+    <string name="obThreeTitle">Plan All Your Meals</string>
+    <string name="obThreeDescription">Synchronise your pantry, grocery list and recipes automatically using the Meal Planner</string>
+    <string name="start">Start</string>
 </resources>

@@ -1,16 +1,20 @@
 package com.scorpysmurf.recipie2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.media.Image;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.button.MaterialButton;
 import com.scorpysmurf.recipie2.onboarding.OnboardingAdapter;
 import com.scorpysmurf.recipie2.onboarding.OnboardingItem;
 
@@ -23,6 +27,8 @@ public class IntroActivity extends AppCompatActivity {
     TextView appName;
     LottieAnimationView logo;
     private OnboardingAdapter onboardingAdapter;
+    private LinearLayout indicatorsLayout;
+    private MaterialButton buttonOnboardingAction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +40,34 @@ public class IntroActivity extends AppCompatActivity {
         appName = findViewById(R.id.app_name);
         logo = findViewById(R.id.logo);
         ViewPager2 onBoardingViewPager = findViewById(R.id.onBoardingViewPager);
+        indicatorsLayout = findViewById(R.id.onBoardingIndicators);
+        buttonOnboardingAction = findViewById(R.id.onBoardingAction);
 
         setupOnboardingItems();
         onBoardingViewPager.setAdapter(onboardingAdapter);
+
+        setupOnboardingIndicators();
+        setupCurrentOnBoardingIndicator(0);
+
+        onBoardingViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                setupCurrentOnBoardingIndicator(position);
+            }
+        });
+
+        buttonOnboardingAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onBoardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
+                    onBoardingViewPager.setCurrentItem(onBoardingViewPager.getCurrentItem() + 1);
+                } else {
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    finish();
+                }
+            }
+        });
 
         splashImg.animate().translationY(-2500).setDuration(1000).setStartDelay(5000);
         appName.animate().translationY(1600).setDuration(1000).setStartDelay(5000);
@@ -53,22 +84,64 @@ public class IntroActivity extends AppCompatActivity {
         OnboardingItem OBItem1 = new OnboardingItem();
         OBItem1.setTitle(IntroActivity.this.getString(R.string.obOneTitle));
         OBItem1.setDescription(IntroActivity.this.getString(R.string.obOneDescription));
-        OBItem1.setImage(R.raw.final_logo);
+        OBItem1.setImage(R.raw.ob1);
 
         OnboardingItem OBItem2 = new OnboardingItem();
         OBItem2.setTitle(IntroActivity.this.getString(R.string.obTwoTitle));
         OBItem2.setDescription(IntroActivity.this.getString(R.string.obTwoDescription));
-        OBItem2.setImage(R.raw.food_anim);
+        OBItem2.setImage(R.raw.ob2);
 
         OnboardingItem OBItem3 = new OnboardingItem();
         OBItem3.setTitle(IntroActivity.this.getString(R.string.obThreeTitle));
         OBItem3.setDescription(IntroActivity.this.getString(R.string.obThreeDescription));
-        OBItem3.setImage(R.raw.hotel_food);
+        OBItem3.setImage(R.raw.ob3);
 
         onboardingItems.add(OBItem1);
         onboardingItems.add(OBItem2);
         onboardingItems.add(OBItem3);
 
         onboardingAdapter = new OnboardingAdapter(onboardingItems);
+    }
+
+    private void setupOnboardingIndicators() {
+        ImageView[] indicators = new ImageView[onboardingAdapter.getItemCount()];
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        layoutParams.setMargins(8,0,8,0);
+
+        for (int i = 0;i<indicators.length;i++) {
+            indicators[i] = new ImageView(getApplicationContext());
+            indicators[i].setImageDrawable(ContextCompat.getDrawable(
+                    getApplicationContext(),
+                    R.drawable.onboarding_indicator_inactive
+            ));
+            indicators[i].setLayoutParams(layoutParams);
+            indicatorsLayout.addView(indicators[i]);
+        }
+    }
+
+    private void setupCurrentOnBoardingIndicator(int index) {
+        int childcount = indicatorsLayout.getChildCount();
+
+        for(int i=0;i<childcount;i++) {
+            ImageView imageView = (ImageView)indicatorsLayout.getChildAt(i);
+
+            if(i == index) {
+                imageView.setImageDrawable(
+                        ContextCompat.getDrawable(getApplicationContext(), R.drawable.onboarding_indicator_active
+                ));
+            } else {
+                imageView.setImageDrawable(
+                        ContextCompat.getDrawable(getApplicationContext(),R.drawable.onboarding_indicator_inactive)
+                );
+            }
+        }
+
+        if(index == onboardingAdapter.getItemCount()-1) {
+            buttonOnboardingAction.setText(IntroActivity.this.getString(R.string.start));
+        } else {
+            buttonOnboardingAction.setText(IntroActivity.this.getString(R.string.next));
+        }
     }
 }
