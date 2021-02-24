@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ReciPie</string>
+    <string name="next">Next</string>
+    <string name="obOneTitle">Become A Master Chef</string>
+    <string name="obOneDescription">Download Recipes from the Master Chefs all around the World to fulfill your cravings</string>
+    <string name="obTwoTitle"></string>
+    <string name="obTwoDescription"></string>
+    <string name="obThreeTitle"></string>
+    <string name="obThreeDescription"></string>
 </resources>
