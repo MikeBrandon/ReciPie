@@ -15,15 +15,9 @@
         app:cnb_backgroundColor="@color/pink100" />
 
     <item
-        android:id="@+id/bottom_nav_pantry"
-        android:title="@string/pantry"
-        android:icon="@raw/pantryb1"
-        app:cnb_backgroundColor="@color/pink100" />
-
-    <item
         android:id="@+id/bottom_nav_mealPlanner"
         android:title="@string/mealplanner"
-        android:icon="@raw/calendarb1"
+        android:icon="@raw/pantryb1"
         app:cnb_backgroundColor="@color/pink100" />
 
     <item

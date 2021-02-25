@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:text="@string/next"
-            android:textColor="@color/black"
+            android:textColor="@color/textonpink"
             app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

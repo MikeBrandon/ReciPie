@@ -56,7 +56,7 @@
         android:text="@string/login"
         android:textStyle="bold"
         android:fontFamily="@font/poppins"
-        android:textColor="@color/black"
+        android:textColor="@color/textonpink"
         android:background="@drawable/button_bg"/>
 
     <TextView

@@ -10,4 +10,8 @@
     <color name="green70">#B3C0FFBB</color>
     <color name="green100">#C0FFBB</color>
     <color name="pink25">#33FFBFA8</color>
+
+    <color name="textonpink">#FF5055</color>
+    <color name="textonyellow">#FF9B15</color>
+    <color name="textongreen">#0CA300</color>
 </resources>

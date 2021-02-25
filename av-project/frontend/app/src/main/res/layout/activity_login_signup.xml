@@ -79,7 +79,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0"
-            android:background="@drawable/vie_bg"/>
+            android:background="@drawable/vie_bg"
+            app:tabSelectedTextColor="@color/textonpink"/>
 
         <Button
             android:id="@+id/skip_button"
@@ -90,7 +91,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_pager"
             android:text="@string/skip"
-            android:textColor="@color/black"
+            android:textColor="@color/textonpink"
             android:fontFamily="@font/poppins"
             android:background="@drawable/button_bg"/>
 

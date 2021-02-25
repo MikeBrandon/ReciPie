@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
         android:gravity="center"
-        android:textColor="@color/pink100"
+        android:textColor="@color/textonpink"
         android:textSize="20sp"
         android:textStyle="bold" />
 
