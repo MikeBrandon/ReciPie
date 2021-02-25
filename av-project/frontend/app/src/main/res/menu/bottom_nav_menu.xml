@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bottom_nav_recipes"
+        android:title="@string/recipes"
+        android:icon="@raw/recipeb1"
+        app:cnb_backgroundColor="@color/pink100" />
+
+    <item
+        android:id="@+id/bottom_nav_downloader"
+        android:title="@string/downloader"
+        android:icon="@raw/downloadb1"
+        app:cnb_backgroundColor="@color/pink100" />
+
+    <item
+        android:id="@+id/bottom_nav_pantry"
+        android:title="@string/pantry"
+        android:icon="@raw/pantryb1"
+        app:cnb_backgroundColor="@color/pink100" />
+
+    <item
+        android:id="@+id/bottom_nav_mealPlanner"
+        android:title="@string/mealplanner"
+        android:icon="@raw/calendarb1"
+        app:cnb_backgroundColor="@color/pink100" />
+
+    <item
+        android:id="@+id/bottom_nav_settings"
+        android:title="@string/settings"
+        android:icon="@raw/settingsb1"
+        app:cnb_backgroundColor="@color/pink100" />
+
+</menu>

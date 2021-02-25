@@ -16,4 +16,11 @@
     <string name="password">Password</string>
     <string name="conf_password">Confirm Password</string>
     <string name="mobno">Phone Number</string>
+    <string name="recipes">Recipes</string>
+    <string name="recipe">Recipe</string>
+    <string name="downloader">Downloader</string>
+    <string name="groceries">Groceries</string>
+    <string name="pantry">Pantry</string>
+    <string name="mealplanner">Meal Planner</string>
+    <string name="settings">Settings</string>
 </resources>

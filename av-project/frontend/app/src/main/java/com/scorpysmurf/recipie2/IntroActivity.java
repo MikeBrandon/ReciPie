@@ -34,6 +34,7 @@ public class IntroActivity extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT = 6000;
     SharedPreferences sharedPreferences;
+    boolean isFirstTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,9 @@ public class IntroActivity extends AppCompatActivity {
         ViewPager2 onBoardingViewPager = findViewById(R.id.onBoardingViewPager);
         indicatorsLayout = findViewById(R.id.onBoardingIndicators);
         buttonOnboardingAction = findViewById(R.id.onBoardingAction);
+
+        sharedPreferences = getSharedPreferences("SharedPref",MODE_PRIVATE);
+        isFirstTime = sharedPreferences.getBoolean("firstTime",true);
 
         setupOnboardingItems();
         onBoardingViewPager.setAdapter(onboardingAdapter);
@@ -78,18 +82,21 @@ public class IntroActivity extends AppCompatActivity {
         appName.animate().translationY(1600).setDuration(1000).setStartDelay(5000);
         logo.animate().translationY(1600).setDuration(1000).setStartDelay(5000);
 
-        onBoardingViewPager.animate().translationYBy(100).setDuration(0).setStartDelay(0);
-        onBoardingViewPager.animate().translationYBy(-100).setDuration(1500).setStartDelay(5000);
-        onBoardingViewPager.animate().alpha(1).setDuration(500).setStartDelay(5500);
+        if (!isFirstTime) {
+            buttonOnboardingAction.setAlpha(0);
+            onBoardingViewPager.setAlpha(0);
+            indicatorsLayout.setAlpha(0);
+
+        } else {
+            onBoardingViewPager.animate().translationYBy(100).setDuration(0).setStartDelay(0);
+            onBoardingViewPager.animate().translationYBy(-100).alpha(1).setDuration(1500).setStartDelay(5000);
+        }
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                sharedPreferences = getSharedPreferences("SharedPref",MODE_PRIVATE);
-                boolean isFirstTime = sharedPreferences.getBoolean("firstTime",true);
-
                 if(isFirstTime) {
-                    sharedPreferences.edit().putBoolean("firstTime",false).commit();
+                    sharedPreferences.edit().putBoolean("firstTime",false).apply();
                 } else {
                     Intent intent = new Intent(IntroActivity.this,LoginSignupActivity.class);
                     startActivity(intent);
