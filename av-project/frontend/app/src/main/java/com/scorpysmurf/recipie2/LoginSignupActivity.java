@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
@@ -54,12 +56,19 @@ public class LoginSignupActivity extends AppCompatActivity {
             }
         });
 
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
+        });
+
         skipButton.setTranslationY(300);
         skipButton.setAlpha(v);
         skipButton.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
 
         tabLayout.setAlpha(v);
-        tabLayout.animate().alpha(1).setDuration(1000).setStartDelay(100).start();
+        tabLayout.animate().alpha(1).setDuration(1000).setStartDelay(150).start();
 
     }
 }

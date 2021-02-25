@@ -5,7 +5,9 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -29,6 +31,9 @@ public class IntroActivity extends AppCompatActivity {
     private OnboardingAdapter onboardingAdapter;
     private LinearLayout indicatorsLayout;
     private MaterialButton buttonOnboardingAction;
+
+    private static int SPLASH_TIME_OUT = 6000;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,22 @@ public class IntroActivity extends AppCompatActivity {
         onBoardingViewPager.animate().translationYBy(100).setDuration(0).setStartDelay(0);
         onBoardingViewPager.animate().translationYBy(-100).setDuration(1500).setStartDelay(5000);
         onBoardingViewPager.animate().alpha(1).setDuration(500).setStartDelay(5500);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                sharedPreferences = getSharedPreferences("SharedPref",MODE_PRIVATE);
+                boolean isFirstTime = sharedPreferences.getBoolean("firstTime",true);
+
+                if(isFirstTime) {
+                    sharedPreferences.edit().putBoolean("firstTime",false).commit();
+                } else {
+                    Intent intent = new Intent(IntroActivity.this,LoginSignupActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        },SPLASH_TIME_OUT);
     }
 
     private void setupOnboardingItems () {
