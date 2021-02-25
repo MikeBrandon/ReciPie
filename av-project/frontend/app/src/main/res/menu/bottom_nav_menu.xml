@@ -5,7 +5,7 @@
     <item
         android:id="@+id/bottom_nav_recipes"
         android:title="@string/recipes"
-        android:icon="@raw/recipeb1"
+        android:icon="@raw/recipeb2"
         app:cnb_backgroundColor="@color/pink100" />
 
     <item
@@ -16,7 +16,7 @@
 
     <item
         android:id="@+id/bottom_nav_mealPlanner"
-        android:title="@string/mealplanner"
+        android:title="@string/meals"
         android:icon="@raw/pantryb1"
         app:cnb_backgroundColor="@color/pink100" />
 

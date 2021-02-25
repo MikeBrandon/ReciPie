@@ -21,6 +21,8 @@
     <string name="downloader">Downloader</string>
     <string name="groceries">Groceries</string>
     <string name="pantry">Pantry</string>
-    <string name="mealplanner">Meal Planner</string>
+    <string name="meals">Meals</string>
     <string name="settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
