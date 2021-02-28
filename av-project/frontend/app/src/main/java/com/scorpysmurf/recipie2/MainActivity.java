@@ -34,7 +34,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         chipNavigationBar = findViewById(R.id.bottom_navigation_bar);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new RecipesFragment()).commit();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container,new RecipesFragment())
+                .commit();
+
         chipNavigationBar.setItemSelected(R.id.bottom_nav_recipes,true);
         bottomMenu();
         titlesArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,urlTitles);
