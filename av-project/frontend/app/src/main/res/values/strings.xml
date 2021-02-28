@@ -2,8 +2,8 @@
     <string name="app_name">ReciPie</string>
     <string name="next">Next</string>
     <string name="obOneTitle">Become A Master Chef</string>
-    <string name="obOneDescription">Download Recipes from the Master Chefs all around the World to fulfill your cravings</string>
-    <string name="obTwoTitle">Organise Your Pantry</string>
+    <string name="obOneDescription">Find Recipes from the Master Chefs all around the World to fulfill your cravings</string>
+    <string name="obTwoTitle">Track Your Pantry</string>
     <string name="obTwoDescription">Spend less time thinking about what you forgot to buy and Spend more time Cooking</string>
     <string name="obThreeTitle">Plan All Your Meals</string>
     <string name="obThreeDescription">Synchronise your pantry, grocery list and recipes automatically using the Meal Planner</string>
@@ -33,4 +33,15 @@
     <string name="directions">Directions</string>
     <string name="item">Item</string>
     <string name="num">num</string>
+    <string name="add_new_recipe">Add New Recipe</string>
+    <string name="view_recipes">View Recipes</string>
+    <string name="my_recipes">My Recipes</string>
+    <string name="saved_pages">Saved Pages</string>
+    <string name="saved">Saved</string>
+    <string name="long_to_delete">Long Press on a Recipe to Delete it</string>
+    <string name="deleted">Deleted</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="are_you_sure">Are You Sure?</string>
+    <string name="delete_recipe">Do You Want to Delete this Recipe</string>
 </resources>

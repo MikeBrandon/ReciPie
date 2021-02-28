@@ -32,7 +32,7 @@ public class IntroActivity extends AppCompatActivity {
     private LinearLayout indicatorsLayout;
     private MaterialButton buttonOnboardingAction;
 
-    private static int SPLASH_TIME_OUT = 6000;
+    private static int SPLASH_TIME_OUT = 6250;
     SharedPreferences sharedPreferences;
     boolean isFirstTime;
 

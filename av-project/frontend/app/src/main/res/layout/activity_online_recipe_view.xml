@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainactivity.RecipesFragment"
-    android:background="@color/pink25">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".mainactivity.DownloaderFragment"
+    android:background="@color/yellow25">
 
     <ImageView
         android:id="@+id/bg"
@@ -48,17 +48,6 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="false" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/recipes_floating_action_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_app_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_app_name"
-        android:src="@raw/downloadb1"/>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
@@ -71,56 +60,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1">
 
-    <ImageView
-        android:id="@+id/button_add_recipe"
-        android:src="@raw/add"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".2"/>
+        <WebView
+            android:id="@+id/online_recipe_viewer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/vie_bg"/>
 
-        <TextView
-            android:id="@+id/textView"
+        <ProgressBar
+            android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/add_new_recipe"
-            android:textColor="@color/textonpink"
-            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_add_recipe"
-            app:layout_constraintVertical_bias="0" />
-
-        <ImageView
-            android:id="@+id/button_view_recipe"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:src="@raw/list"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintVertical_bias=".3" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/view_recipes"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_view_recipe"
-        app:layout_constraintVertical_bias="0"
-        android:layout_margin="10dp"
-        android:fontFamily="@font/poppins_bold"
-        android:textSize="20sp"
-        android:textColor="@color/textonpink"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

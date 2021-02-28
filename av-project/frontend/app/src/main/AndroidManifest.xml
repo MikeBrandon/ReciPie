@@ -11,20 +11,20 @@
         android:roundIcon="@raw/pink_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReciPie2">
+        <activity android:name=".OnlineSavedRecipesActivity"></activity>
+        <activity android:name=".OnlineRecipeViewActivity" />
         <activity android:name=".LoginSignupActivity" />
         <activity android:name=".IntroActivity">
 
-<!--            THIS IS THE STARTING ACTIVITY-->
+            <!-- THIS IS THE STARTING ACTIVITY -->
 
         </activity>
         <activity android:name=".MainActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <meta-data

@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.ReciPie2" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/pink70</item>
+        <item name="colorPrimary">@color/pink100</item>
         <item name="colorPrimaryVariant">@color/pink100</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->

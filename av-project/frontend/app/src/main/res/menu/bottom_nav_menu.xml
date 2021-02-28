@@ -4,14 +4,14 @@
 
     <item
         android:id="@+id/bottom_nav_recipes"
-        android:title="@string/recipes"
+        android:title="@string/my_recipes"
         android:icon="@raw/recipeb2"
         app:cnb_backgroundColor="@color/pink100" />
 
     <item
         android:id="@+id/bottom_nav_downloader"
-        android:title="@string/downloader"
-        android:icon="@raw/downloadb1"
+        android:title="Online"
+        android:icon="@raw/globe"
         app:cnb_backgroundColor="@color/pink100" />
 
     <item
