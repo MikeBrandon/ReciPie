@@ -20,17 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/logo"-->
-<!--        android:layout_width="100dp"-->
-<!--        android:layout_height="100dp"-->
-<!--        android:src="@raw/final_logo"-->
-<!--        app:layout_constraintVertical_bias=".3"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent" />-->
-
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/logo"
         android:layout_width="200dp"
@@ -43,7 +32,7 @@
         app:layout_constraintVertical_bias=".3"
         app:lottie_autoPlay="true"
         app:lottie_imageAssetsFolder="raw"
-        app:lottie_loop="true"
+        app:lottie_loop="false"
         app:lottie_rawRes="@raw/hamburger" />
 
     <TextView

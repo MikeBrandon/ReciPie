@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -59,7 +61,15 @@ public class LoginSignupActivity extends AppCompatActivity {
         skipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                //Add Transition
+                Pair[] pairs = new Pair[1];
+                pairs[0] = new Pair<View,String>(skipButton,"transition_skip_button");
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginSignupActivity.this,pairs);
+
+                startActivity(intent,options.toBundle());
             }
         });
 
@@ -69,6 +79,5 @@ public class LoginSignupActivity extends AppCompatActivity {
 
         tabLayout.setAlpha(v);
         tabLayout.animate().alpha(1).setDuration(1000).setStartDelay(150).start();
-
     }
 }

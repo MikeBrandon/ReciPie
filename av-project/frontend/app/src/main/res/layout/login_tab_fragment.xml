@@ -20,7 +20,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingRight="20dp"
-        android:background="@drawable/edit_text_bg"/>
+        android:background="@drawable/edit_text_bg" />
 
     <EditText
         android:id="@+id/password"
@@ -57,7 +57,7 @@
         android:textStyle="bold"
         android:fontFamily="@font/poppins"
         android:textColor="@color/textonpink"
-        android:background="@drawable/button_bg"/>
+        android:background="@drawable/button_bg" />
 
     <TextView
         android:id="@+id/forgot_password"

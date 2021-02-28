@@ -93,7 +93,8 @@
             android:text="@string/skip"
             android:textColor="@color/textonpink"
             android:fontFamily="@font/poppins"
-            android:background="@drawable/button_bg"/>
+            android:background="@drawable/button_bg"
+            android:transitionName="transition_skip_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

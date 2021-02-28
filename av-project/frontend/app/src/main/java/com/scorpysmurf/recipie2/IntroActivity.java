@@ -90,6 +90,7 @@ public class IntroActivity extends AppCompatActivity {
         } else {
             onBoardingViewPager.animate().translationYBy(100).setDuration(0).setStartDelay(0);
             onBoardingViewPager.animate().translationYBy(-100).alpha(1).setDuration(1500).setStartDelay(5000);
+            logo.animate().alpha(0).setDuration(1500).setStartDelay(6000);
         }
 
         new Handler().postDelayed(new Runnable() {

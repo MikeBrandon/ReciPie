@@ -60,7 +60,7 @@
         app:layout_constraintWidth_percent=".8"
         android:layout_marginTop="10dp"
         android:inputType="textPassword"
-        android:background="@drawable/edit_text_bg"/>
+        android:background="@drawable/edit_text_bg" />
 
     <EditText
         android:id="@+id/mobile_number"

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:id="@+id/fragment_container">
+    android:id="@+id/fragment_container"
+    android:transitionName="transition_skip_button">
 
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/bottom_navigation_bar"
