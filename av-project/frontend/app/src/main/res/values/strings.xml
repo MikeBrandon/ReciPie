@@ -44,4 +44,6 @@
     <string name="no">No</string>
     <string name="are_you_sure">Are You Sure?</string>
     <string name="delete_recipe">Do You Want to Delete this Recipe</string>
+    <string name="direction">Direction</string>
+    <string name="save">Save</string>
 </resources>

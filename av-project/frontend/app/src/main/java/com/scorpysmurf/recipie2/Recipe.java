@@ -2,20 +2,20 @@ package com.scorpysmurf.recipie2;
 
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+
 public class Recipe {
 
     String name;
-    String directions;
-    String notes;
     String servings;
     String prep;
     String cook;
+    ArrayList<String> directions;
+    ArrayList<String> ingredients;
     int totalTime;
 
-    public Recipe(String name, String directions, String notes, String servings, String prep, String cook) {
+    public Recipe(String name, String servings, String prep, String cook) {
         this.name = name;
-        this.directions = directions;
-        this.notes = notes;
         this.servings = servings;
         this.prep = prep;
         this.cook = cook;
@@ -27,22 +27,6 @@ public class Recipe {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDirections() {
-        return directions;
-    }
-
-    public void setDirections(String directions) {
-        this.directions = directions;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     public String getServings() {

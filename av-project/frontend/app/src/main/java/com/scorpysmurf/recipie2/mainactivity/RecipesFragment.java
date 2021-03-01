@@ -10,6 +10,7 @@ import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.scorpysmurf.recipie2.OnlineSavedRecipesActivity;
@@ -19,6 +20,7 @@ public class RecipesFragment extends Fragment {
 
     View view;
     FloatingActionButton fabDownloads;
+    Button btnAddNewRecipe, btnViewRecipes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,5 +52,10 @@ public class RecipesFragment extends Fragment {
 
             }
         });
+
+        btnAddNewRecipe = view.findViewById(R.id.button_add_recipe);
+        btnViewRecipes = view.findViewById(R.id.button_view_recipe);
+
+
     }
 }
