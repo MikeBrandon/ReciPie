@@ -20,7 +20,7 @@ public class RecipesFragment extends Fragment {
 
     View view;
     FloatingActionButton fabDownloads;
-    Button btnAddNewRecipe, btnViewRecipes;
+//    Button btnAddNewRecipe, btnViewRecipes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,9 +53,8 @@ public class RecipesFragment extends Fragment {
             }
         });
 
-        btnAddNewRecipe = view.findViewById(R.id.button_add_recipe);
-        btnViewRecipes = view.findViewById(R.id.button_view_recipe);
-
+//        btnAddNewRecipe = view.findViewById(R.id.button_add_recipe);
+//        btnViewRecipes = view.findViewById(R.id.button_view_recipe);
 
     }
 }

@@ -52,10 +52,3 @@ dependencies {
     //Material Designs
     implementation 'com.google.android.material:material:1.3.0'
 }
-
-apply plugin: 'com.localazy.gradle'
-
-localazy {
-    readKey "a8730531513924843388-636fdc7403612566f6070bea46110dc520b9d0e2c65e507792b8ef66ce1302c8"
-    writeKey "a8730531513924843388-cd3d091bff3746e7b06a28ab41029ca1ade20868beabf19c87983596260849a4"
-}

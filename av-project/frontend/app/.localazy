@@ -1,7 +1,0 @@
-[packages]
-com.scorpysmurf.recipie2 = raa
-
-[localazy]
-allStringsUploaded = true
-showWelcomeMessage = false
-
