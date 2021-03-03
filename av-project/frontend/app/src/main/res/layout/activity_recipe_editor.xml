@@ -1,10 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecipeEditorActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".mainactivity.DownloaderFragment"
+    android:background="@color/yellow25">
+
+    <ImageView
+        android:id="@+id/bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@raw/bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHeight_percent="0.17"
+        android:scaleType="centerCrop"
+        app:layout_constraintVertical_bias="0"/>
+
+    <TextView
+        android:id="@+id/txt_app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"
+        app:layout_constraintVertical_bias=".5"
+        android:textStyle="bold"
+        android:fontFamily="cursive"
+        android:textSize="30sp"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/logo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:lottie_rawRes="@raw/hamburger"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toStartOf="@id/txt_app_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bg"
+        app:layout_constraintHorizontal_bias="1"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/vie_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.88"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"
+        android:elevation="2dp">
 
     <TextView
         android:id="@+id/title"
@@ -18,7 +73,7 @@
         app:layout_constraintVertical_bias="0"
         android:textSize="40sp"
         android:fontFamily="cursive"
-        android:text="@string/recipe"
+        android:text="@string/add_new_recipe"
         android:textColor="@color/textonpink"
         android:layout_marginTop="25dp"/>
 
@@ -177,26 +232,61 @@
         app:layout_constraintVertical_bias="0"
         app:layout_constraintWidth_percent=".8" />
 
-    <EditText
-        android:id="@+id/edit_text_new_directions"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/edit_text_bg"
-        android:hint="@string/directions"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/list_view_ingredients"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="@+id/list_view_ingredients"
-        app:layout_constraintTop_toBottomOf="@+id/list_view_ingredients"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintWidth_percent=".8"
-        android:layout_marginTop="5dp"
-        android:inputType="textMultiLine"
-        app:layout_constraintHeight_percent=".2"
-        android:gravity="top"/>
+        <EditText
+            android:id="@+id/edit_text_new_direction"
+            android:layout_marginTop="5dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_bg"
+            android:hint="@string/direction"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/edit_text_new_ingredient"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@+id/edit_text_new_ingredient"
+            app:layout_constraintTop_toBottomOf="@+id/list_view_ingredients"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintWidth_percent=".5" />
+
+        <Button
+            android:id="@+id/button_add_direction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add"
+            android:textColor="@color/textonpink"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_text_new_direction"
+            app:layout_constraintEnd_toEndOf="@+id/button_add_ingredient"
+            app:layout_constraintStart_toStartOf="@+id/button_add_ingredient"
+            app:layout_constraintTop_toTopOf="@+id/edit_text_new_direction" />
+
+        <ListView
+            android:id="@+id/list_view_directions"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/edit_text_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_new_direction"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintWidth_percent=".8"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:textColor="@color/textonpink"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/list_view_directions" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
