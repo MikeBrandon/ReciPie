@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -19,15 +21,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class RecipeEditorActivity extends AppCompatActivity {
+public class RecipeEditorEditActivity extends AppCompatActivity {
 
     String name;
     String servings;
     String prep;
     String cook;
 
-    ArrayList<String> directions = new ArrayList<>();
-    ArrayList<String> ingredients = new ArrayList<>();
+    int recipeID;
+
+    ArrayList<String> directions;
+    ArrayList<String> ingredients;
     ArrayAdapter directionsAdapter;
     ArrayAdapter ingredientsAdapter;
 
@@ -39,7 +43,10 @@ public class RecipeEditorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_recipe_editor);
+        setContentView(R.layout.activity_recipe_editor_edit);
+
+        Intent intent = getIntent();
+        recipeID = intent.getIntExtra("recipeID",-1);
 
         nameText = findViewById(R.id.edit_txt_name);
         servingsText = findViewById(R.id.edit_txt_servings);
@@ -55,21 +62,35 @@ public class RecipeEditorActivity extends AppCompatActivity {
         addIngredientBtn = findViewById(R.id.button_add_ingredient);
         saveBtn = findViewById(R.id.button_save);
 
+        ingredients = RecipeViewActivity.ingredients;
+        directions = RecipeViewActivity.directions;
+
         directionsAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,directions);
         ingredientsAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,ingredients);
 
+        Log.i("Progress: ","Adapters initialized");
+
         directionsListView.setAdapter(directionsAdapter);
         ingredientsListView.setAdapter(ingredientsAdapter);
+
+        Log.i("Progress: ","Adapters set");
+
+        nameText.setText(RecipeViewActivity.name);
+        servingsText.setText(RecipeViewActivity.servings);
+        prepText.setText(RecipeViewActivity.prep);
+        cookText.setText(RecipeViewActivity.cook);
+
+        Log.i("Progress: ","Set TextView text Values");
 
         directionsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                new AlertDialog.Builder(RecipeEditorActivity.this)
+                new AlertDialog.Builder(RecipeEditorEditActivity.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setTitle(RecipeEditorActivity.this.getString(R.string.are_you_sure))
-                        .setMessage(RecipeEditorActivity.this.getString(R.string.delete_recipe))
-                        .setPositiveButton(RecipeEditorActivity.this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        .setTitle(RecipeEditorEditActivity.this.getString(R.string.are_you_sure))
+                        .setMessage(RecipeEditorEditActivity.this.getString(R.string.delete_recipe))
+                        .setPositiveButton(RecipeEditorEditActivity.this.getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
@@ -78,11 +99,11 @@ public class RecipeEditorActivity extends AppCompatActivity {
                                 directions.remove(position);
                                 directionsAdapter.notifyDataSetChanged();
 
-                                Toast.makeText(RecipeEditorActivity.this, deletedDirection + " " + RecipeEditorActivity.this.getString(R.string.deleted), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RecipeEditorEditActivity.this, deletedDirection + " " + RecipeEditorEditActivity.this.getString(R.string.deleted), Toast.LENGTH_SHORT).show();
 
                             }
                         })
-                        .setNegativeButton(RecipeEditorActivity.this.getString(R.string.no),null)
+                        .setNegativeButton(RecipeEditorEditActivity.this.getString(R.string.no),null)
                         .show();
 
                 return true;
@@ -93,11 +114,11 @@ public class RecipeEditorActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                new AlertDialog.Builder(RecipeEditorActivity.this)
+                new AlertDialog.Builder(RecipeEditorEditActivity.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setTitle(RecipeEditorActivity.this.getString(R.string.are_you_sure))
-                        .setMessage(RecipeEditorActivity.this.getString(R.string.delete_recipe))
-                        .setPositiveButton(RecipeEditorActivity.this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        .setTitle(RecipeEditorEditActivity.this.getString(R.string.are_you_sure))
+                        .setMessage(RecipeEditorEditActivity.this.getString(R.string.delete_recipe))
+                        .setPositiveButton(RecipeEditorEditActivity.this.getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
@@ -106,11 +127,11 @@ public class RecipeEditorActivity extends AppCompatActivity {
                                 ingredients.remove(position);
                                 ingredientsAdapter.notifyDataSetChanged();
 
-                                Toast.makeText(RecipeEditorActivity.this, deletedDirection + " " + RecipeEditorActivity.this.getString(R.string.deleted), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RecipeEditorEditActivity.this, deletedDirection + " " + RecipeEditorEditActivity.this.getString(R.string.deleted), Toast.LENGTH_SHORT).show();
 
                             }
                         })
-                        .setNegativeButton(RecipeEditorActivity.this.getString(R.string.no),null)
+                        .setNegativeButton(RecipeEditorEditActivity.this.getString(R.string.no),null)
                         .show();
 
                 return true;
@@ -145,23 +166,29 @@ public class RecipeEditorActivity extends AppCompatActivity {
                 cook = "" + cookText.getText();
 
                 MyRecipesActivity.recipes.add(new Recipe(name,servings, prep, cook));
+                MyRecipesActivity.recipes.remove(MyRecipesActivity.selected);
                 MyRecipesActivity.adapter.notifyDataSetChanged();
 
                 String sDirections = null, sIngredients = null;
 
                 try {
                     sDirections = ObjectSerializer.serialize(directions);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try {
                     sIngredients = ObjectSerializer.serialize(ingredients);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                MyRecipesActivity.name.add(name);
-                MyRecipesActivity.servings.add(servings);
-                MyRecipesActivity.prep.add(prep);
-                MyRecipesActivity.cook.add(cook);
-                MyRecipesActivity.directions.add(sDirections);
-                MyRecipesActivity.ingredients.add(sIngredients);
+                MyRecipesActivity.name.add(recipeID, name);
+                MyRecipesActivity.servings.add(recipeID, servings);
+                MyRecipesActivity.prep.add(recipeID, prep);
+                MyRecipesActivity.cook.add(recipeID, cook);
+                MyRecipesActivity.directions.add(recipeID, sDirections);
+                MyRecipesActivity.ingredients.add(recipeID, sIngredients);
 
                 MyRecipesActivity.nameAdapter.notifyDataSetChanged();
                 MyRecipesActivity.servingsAdapter.notifyDataSetChanged();
@@ -188,9 +215,8 @@ public class RecipeEditorActivity extends AppCompatActivity {
                         .putStringSet("rIngredients",ingredientSet)
                         .apply();
 
-                Toast.makeText(RecipeEditorActivity.this, name + " " + RecipeEditorActivity.this.getString(R.string.saved), Toast.LENGTH_LONG).show();
+                Toast.makeText(RecipeEditorEditActivity.this, name + " " + RecipeEditorEditActivity.this.getString(R.string.saved), Toast.LENGTH_LONG).show();
 
-                finish();
             }
         });
     }

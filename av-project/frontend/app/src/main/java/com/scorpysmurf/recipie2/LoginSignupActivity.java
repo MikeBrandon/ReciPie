@@ -70,6 +70,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginSignupActivity.this,pairs);
 
                 startActivity(intent,options.toBundle());
+                finish();
             }
         });
 

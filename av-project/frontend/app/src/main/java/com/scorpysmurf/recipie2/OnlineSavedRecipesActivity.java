@@ -58,6 +58,17 @@ public class OnlineSavedRecipesActivity extends AppCompatActivity {
             }
         },10000);
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Animation animation = android.view.animation.AnimationUtils.loadAnimation(fabHelp.getContext(),R.anim.shake);
+                animation.setDuration(200L);
+                fabHelp.startAnimation(animation);
+
+            }
+        },15000);
+
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,MainActivity.urlTitles);
 
         listView.setAdapter(arrayAdapter);
