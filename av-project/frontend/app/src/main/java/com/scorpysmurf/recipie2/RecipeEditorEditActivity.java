@@ -165,8 +165,7 @@ public class RecipeEditorEditActivity extends AppCompatActivity {
                 prep = "" + prepText.getText();
                 cook = "" + cookText.getText();
 
-                MyRecipesActivity.recipes.add(new Recipe(name,servings, prep, cook));
-                MyRecipesActivity.recipes.remove(MyRecipesActivity.selected);
+                MyRecipesActivity.recipes.add(recipeID, new Recipe(name,servings, prep, cook));
                 MyRecipesActivity.adapter.notifyDataSetChanged();
 
                 String sDirections = null, sIngredients = null;
@@ -189,6 +188,8 @@ public class RecipeEditorEditActivity extends AppCompatActivity {
                 MyRecipesActivity.cook.add(recipeID, cook);
                 MyRecipesActivity.directions.add(recipeID, sDirections);
                 MyRecipesActivity.ingredients.add(recipeID, sIngredients);
+
+                Log.i("Status","Variables Filled");
 
                 MyRecipesActivity.nameAdapter.notifyDataSetChanged();
                 MyRecipesActivity.servingsAdapter.notifyDataSetChanged();

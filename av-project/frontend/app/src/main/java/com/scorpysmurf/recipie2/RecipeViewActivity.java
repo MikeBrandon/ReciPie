@@ -30,13 +30,13 @@ public class RecipeViewActivity extends AppCompatActivity {
 
     public static ArrayList<String> directions;
     public static ArrayList<String> ingredients;
-    ArrayAdapter directionAdapter;
-    ArrayAdapter ingredientAdapter;
+    public static ArrayAdapter directionAdapter;
+    public static ArrayAdapter ingredientAdapter;
 
     int totalTime;
 
-    TextView txtName, txtServings, txtPrep, txtCook, txtTotal;
-    ListView listIngredient, listDirections;
+    public static TextView txtName, txtServings, txtPrep, txtCook, txtTotal;
+    public static ListView listIngredient, listDirections;
     FloatingActionButton fabEdit, fabTimer, fabDelete;
 
     @Override
