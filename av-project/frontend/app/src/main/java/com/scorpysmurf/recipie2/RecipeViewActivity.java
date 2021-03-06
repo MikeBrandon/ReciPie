@@ -2,18 +2,28 @@ package com.scorpysmurf.recipie2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.slider.Slider;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,6 +53,17 @@ public class RecipeViewActivity extends AppCompatActivity {
     public static ListView listIngredient, listDirections;
     FloatingActionButton fabTimer, fabDelete;
 
+    Dialog dialog;
+    Boolean countdownIsActive = false;
+    CountDownTimer countDownTimer;
+
+    ImageView cross;
+    SeekBar slider;
+    TextView timerText;
+    Button btnAction;
+
+    MediaPlayer mediaPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +82,7 @@ public class RecipeViewActivity extends AppCompatActivity {
         listDirections = findViewById(R.id.directions_list_view);
         fabTimer = findViewById(R.id.fab_timer);
         fabDelete = findViewById(R.id.fab_delete);
+        dialog = new Dialog(this);
 
         if(recipeID != -1) {
             name = MyRecipesActivity.name.get(recipeID);
@@ -98,53 +120,60 @@ public class RecipeViewActivity extends AppCompatActivity {
             fabDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MyRecipesActivity.name.remove(recipeID);
-                    MyRecipesActivity.cook.remove(recipeID);
-                    MyRecipesActivity.prep.remove(recipeID);
-                    MyRecipesActivity.ingredients.remove(recipeID);
-                    MyRecipesActivity.directions.remove(recipeID);
-                    MyRecipesActivity.servings.remove(recipeID);
 
-                    MyRecipesActivity.recipes.remove(recipeID);
-                    MyRecipesActivity.adapter.notifyDataSetChanged();
+                    new AlertDialog.Builder(RecipeViewActivity.this)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setTitle(RecipeViewActivity.this.getString(R.string.are_you_sure))
+                            .setMessage(RecipeViewActivity.this.getString(R.string.delete_recipe))
+                            .setPositiveButton(RecipeViewActivity.this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                    MyRecipesActivity.nameAdapter.notifyDataSetChanged();
-                    MyRecipesActivity.cookAdapter.notifyDataSetChanged();
-                    MyRecipesActivity.prepAdapter.notifyDataSetChanged();
-                    MyRecipesActivity.ingredientsAdapter.notifyDataSetChanged();
-                    MyRecipesActivity.directionsAdapter.notifyDataSetChanged();
-                    MyRecipesActivity.servingsAdapter.notifyDataSetChanged();
+                                    MyRecipesActivity.name.remove(recipeID);
+                                    MyRecipesActivity.cook.remove(recipeID);
+                                    MyRecipesActivity.prep.remove(recipeID);
+                                    MyRecipesActivity.ingredients.remove(recipeID);
+                                    MyRecipesActivity.directions.remove(recipeID);
+                                    MyRecipesActivity.servings.remove(recipeID);
 
-                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2.myrecipes",MODE_PRIVATE);
+                                    MyRecipesActivity.recipes.remove(recipeID);
+                                    MyRecipesActivity.adapter.notifyDataSetChanged();
 
-//                    sharedPreferences.edit().remove("rName").apply();
-//                    sharedPreferences.edit().remove("rServings").apply();
-//                    sharedPreferences.edit().remove("rPrep").apply();
-//                    sharedPreferences.edit().remove("rCook").apply();
-//                    sharedPreferences.edit().remove("rDirections").apply();
-//                    sharedPreferences.edit().remove("rIngredients").apply();
+                                    MyRecipesActivity.nameAdapter.notifyDataSetChanged();
+                                    MyRecipesActivity.cookAdapter.notifyDataSetChanged();
+                                    MyRecipesActivity.prepAdapter.notifyDataSetChanged();
+                                    MyRecipesActivity.ingredientsAdapter.notifyDataSetChanged();
+                                    MyRecipesActivity.directionsAdapter.notifyDataSetChanged();
+                                    MyRecipesActivity.servingsAdapter.notifyDataSetChanged();
 
-                    sharedPreferences.edit().clear().apply();
+                                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2.myrecipes",MODE_PRIVATE);
 
-                    sharedPreferences.edit()
-                            .putStringSet("rName",new HashSet<String>(MyRecipesActivity.name))
-                            .putStringSet("rServings",new HashSet<String>(MyRecipesActivity.servings))
-                            .putStringSet("rPrep",new HashSet<String>(MyRecipesActivity.prep))
-                            .putStringSet("rCook",new HashSet<String>(MyRecipesActivity.cook))
-                            .putStringSet("rDirections",new HashSet<String>(MyRecipesActivity.directions))
-                            .putStringSet("rIngredients",new HashSet<String>(MyRecipesActivity.ingredients))
-                            .apply();
+                                    sharedPreferences.edit().clear().apply();
 
-                    Toast.makeText(RecipeViewActivity.this, name + " " + getString(R.string.deleted), Toast.LENGTH_SHORT).show();
+                                    sharedPreferences.edit()
+                                            .putStringSet("rName",new HashSet<String>(MyRecipesActivity.name))
+                                            .putStringSet("rServings",new HashSet<String>(MyRecipesActivity.servings))
+                                            .putStringSet("rPrep",new HashSet<String>(MyRecipesActivity.prep))
+                                            .putStringSet("rCook",new HashSet<String>(MyRecipesActivity.cook))
+                                            .putStringSet("rDirections",new HashSet<String>(MyRecipesActivity.directions))
+                                            .putStringSet("rIngredients",new HashSet<String>(MyRecipesActivity.ingredients))
+                                            .apply();
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
+                                    Toast.makeText(RecipeViewActivity.this, name + " " + getString(R.string.deleted), Toast.LENGTH_SHORT).show();
 
-                            finish();
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
 
-                        }
-                    },2500);
+                                            finish();
+
+                                        }
+                                    },2500);
+
+                                }
+                            })
+                            .setNegativeButton(RecipeViewActivity.this.getString(R.string.no),null)
+                            .show();
 
                 }
             });
@@ -153,9 +182,134 @@ public class RecipeViewActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
+                    dialog.setContentView(R.layout.timer_pop_up);
+                    cross = dialog.findViewById(R.id.img_cross_close);
+                    slider = dialog.findViewById(R.id.timer_slider);
+                    timerText = dialog.findViewById(R.id.txt_time);
+                    btnAction = dialog.findViewById(R.id.btn_timer);
+
+                    cross.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    slider.setMax(3600);
+                    slider.setProgress(1800);
+
+                    slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                        @Override
+                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                            updateTimer(progress,timerText);
+
+                            if(progress == 0) {
+                                btnAction.setVisibility(View.INVISIBLE);
+                            } else {
+                                btnAction.setVisibility(View.VISIBLE);
+                            }
+
+                        }
+
+                        @Override
+                        public void onStartTrackingTouch(SeekBar seekBar) {
+
+                        }
+
+                        @Override
+                        public void onStopTrackingTouch(SeekBar seekBar) {
+
+                        }
+                    });
+
+                    btnAction.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            if(!countdownIsActive) {
+
+                                countdownIsActive = true;
+                                slider.setProgress(1800);
+                                slider.setEnabled(false);
+                                btnAction.setText(getString(R.string.stop));
+
+                                countDownTimer = new CountDownTimer(slider.getProgress() * 1000,1000) {
+
+                                    @Override
+                                    public void onTick(long millisUntilFinished) {
+
+                                        updateTimer((int) millisUntilFinished/1000,timerText);
+
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+
+                                        timerText.setText(getString(R.string._00_00));
+
+                                        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2",MODE_PRIVATE);
+                                        int alm = sharedPreferences.getInt("alm",1);
+
+                                        switch (alm) {
+                                            case 2:
+                                                mediaPlayer = MediaPlayer.create(RecipeViewActivity.this,R.raw.alm_buzzer);
+                                                break;
+                                            case 3:
+                                                mediaPlayer = MediaPlayer.create(RecipeViewActivity.this,R.raw.alm_chime);
+                                                break;
+                                            case 4:
+                                                mediaPlayer = MediaPlayer.create(RecipeViewActivity.this,R.raw.alm_jolly);
+                                                break;
+                                            default:
+                                                mediaPlayer = MediaPlayer.create(RecipeViewActivity.this,R.raw.alm_default);
+                                        }
+
+                                        mediaPlayer.start();
+
+                                        countdownIsActive = false;
+                                        slider.setEnabled(true);
+                                        btnAction.setText(getString(R.string.start));
+                                        timerText.setText(getString(R.string._30_00));
+
+                                    }
+                                }.start();
+
+                            } else {
+
+                                countdownIsActive = false;
+                                slider.setEnabled(true);
+                                btnAction.setText(getString(R.string.start));
+                                countDownTimer.cancel();
+                                timerText.setText(getString(R.string._30_00));
+
+                            }
+                        }
+                    });
+
+                    dialog.show();
                 }
             });
+        }
+    }
 
+    private void updateTimer(int progress, TextView timerText) {
+
+        int min = progress / 60;
+        int sec = progress - min*60;
+
+        String stSec = zeroFix(sec);
+        String stMin = zeroFix(min);
+
+        timerText.setText(stMin + getString(R.string.cln) + stSec);
+
+    }
+
+    private String zeroFix(int val) {
+        if (val < 10) {
+            return  getString(R.string._0) + val;
+        } else {
+            return Integer.toString(val);
         }
     }
 }
