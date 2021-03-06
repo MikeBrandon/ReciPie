@@ -244,7 +244,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/directions_list_view"
-            app:layout_constraintHorizontal_bias=".5"/>
+            app:layout_constraintHorizontal_bias=".3"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_delete"
@@ -253,18 +253,7 @@
             android:src="@android:drawable/ic_menu_delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias=".25"
-            app:layout_constraintStart_toEndOf="@+id/fab_timer"
-            app:layout_constraintTop_toBottomOf="@+id/directions_list_view" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_edit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/fab_timer"
-            app:layout_constraintHorizontal_bias=".75"
+            app:layout_constraintHorizontal_bias=".7"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/directions_list_view" />
 

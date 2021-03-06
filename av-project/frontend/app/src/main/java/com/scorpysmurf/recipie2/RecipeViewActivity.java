@@ -3,17 +3,21 @@ package com.scorpysmurf.recipie2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class RecipeViewActivity extends AppCompatActivity {
 
@@ -37,7 +41,7 @@ public class RecipeViewActivity extends AppCompatActivity {
 
     public static TextView txtName, txtServings, txtPrep, txtCook, txtTotal;
     public static ListView listIngredient, listDirections;
-    FloatingActionButton fabEdit, fabTimer, fabDelete;
+    FloatingActionButton fabTimer, fabDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +59,6 @@ public class RecipeViewActivity extends AppCompatActivity {
         txtTotal = findViewById(R.id.total_recipe);
         listIngredient = findViewById(R.id.ingredients_list_view);
         listDirections = findViewById(R.id.directions_list_view);
-        fabEdit = findViewById(R.id.fab_edit);
         fabTimer = findViewById(R.id.fab_timer);
         fabDelete = findViewById(R.id.fab_delete);
 
@@ -92,16 +95,67 @@ public class RecipeViewActivity extends AppCompatActivity {
             listDirections.setAdapter(directionAdapter);
             listIngredient.setAdapter(ingredientAdapter);
 
-            fabEdit.setOnClickListener(new View.OnClickListener() {
+            fabDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MyRecipesActivity.name.remove(recipeID);
+                    MyRecipesActivity.cook.remove(recipeID);
+                    MyRecipesActivity.prep.remove(recipeID);
+                    MyRecipesActivity.ingredients.remove(recipeID);
+                    MyRecipesActivity.directions.remove(recipeID);
+                    MyRecipesActivity.servings.remove(recipeID);
 
-                    Intent intent1 = new Intent(RecipeViewActivity.this,RecipeEditorEditActivity.class);
-                    intent1.putExtra("recipeID", MyRecipesActivity.recipes.indexOf(MyRecipesActivity.selected));
-                    startActivity(intent1);
+                    MyRecipesActivity.recipes.remove(recipeID);
+                    MyRecipesActivity.adapter.notifyDataSetChanged();
+
+                    MyRecipesActivity.nameAdapter.notifyDataSetChanged();
+                    MyRecipesActivity.cookAdapter.notifyDataSetChanged();
+                    MyRecipesActivity.prepAdapter.notifyDataSetChanged();
+                    MyRecipesActivity.ingredientsAdapter.notifyDataSetChanged();
+                    MyRecipesActivity.directionsAdapter.notifyDataSetChanged();
+                    MyRecipesActivity.servingsAdapter.notifyDataSetChanged();
+
+                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2.myrecipes",MODE_PRIVATE);
+
+//                    sharedPreferences.edit().remove("rName").apply();
+//                    sharedPreferences.edit().remove("rServings").apply();
+//                    sharedPreferences.edit().remove("rPrep").apply();
+//                    sharedPreferences.edit().remove("rCook").apply();
+//                    sharedPreferences.edit().remove("rDirections").apply();
+//                    sharedPreferences.edit().remove("rIngredients").apply();
+
+                    sharedPreferences.edit().clear().apply();
+
+                    sharedPreferences.edit()
+                            .putStringSet("rName",new HashSet<String>(MyRecipesActivity.name))
+                            .putStringSet("rServings",new HashSet<String>(MyRecipesActivity.servings))
+                            .putStringSet("rPrep",new HashSet<String>(MyRecipesActivity.prep))
+                            .putStringSet("rCook",new HashSet<String>(MyRecipesActivity.cook))
+                            .putStringSet("rDirections",new HashSet<String>(MyRecipesActivity.directions))
+                            .putStringSet("rIngredients",new HashSet<String>(MyRecipesActivity.ingredients))
+                            .apply();
+
+                    Toast.makeText(RecipeViewActivity.this, name + " " + getString(R.string.deleted), Toast.LENGTH_SHORT).show();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            finish();
+
+                        }
+                    },2500);
 
                 }
             });
+
+            fabTimer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
         }
     }
 }
