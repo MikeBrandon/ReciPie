@@ -35,7 +35,6 @@
     <string name="num">num</string>
     <string name="add_new_recipe">Add New Recipe</string>
     <string name="view_recipes">View Recipes</string>
-    <string name="my_recipes">My Recipes</string>
     <string name="saved_pages">Saved Pages</string>
     <string name="saved">Saved</string>
     <string name="long_to_delete">Long Press on a Recipe to Delete it</string>
@@ -46,4 +45,16 @@
     <string name="delete_recipe">Do You Want to Delete this Recipe</string>
     <string name="direction">Direction</string>
     <string name="save">Save</string>
+    <string name="my_recipes">My Recipes</string>
+    <string name="total_time">Total Time (min)</string>
+    <string name="_00">00</string>
+    <string name="totaltime">Total Time</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="edit_recipe">Edit Recipe</string>
+    <string name="_30_00">30:00</string>
+    <string name="_00_00">00:00</string>
+    <string name="_0">0</string>
+    <string name="timer">Timer</string>
+    <string name="cln">:</string>
+    <string name="stop">Stop</string>
 </resources>

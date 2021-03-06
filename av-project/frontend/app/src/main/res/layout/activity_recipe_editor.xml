@@ -78,7 +78,7 @@
         android:layout_marginTop="25dp"/>
 
     <EditText
-        android:id="@+id/edit_text_name"
+        android:id="@+id/edit_txt_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_bg"
@@ -93,10 +93,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintVertical_bias="0"
-        app:layout_constraintWidth_percent=".8" />
+        app:layout_constraintWidth_percent=".8"
+        android:inputType="textPersonName"/>
 
     <EditText
-        android:id="@+id/edit_text_servings"
+        android:id="@+id/edit_txt_servings"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -110,13 +111,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="@+id/edit_text_name"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_name"
+        app:layout_constraintStart_toStartOf="@+id/edit_txt_name"
+        app:layout_constraintTop_toBottomOf="@id/edit_txt_name"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintWidth_percent=".3" />
 
     <EditText
-        android:id="@+id/edit_text_prep"
+        android:id="@+id/edit_txt_prep"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_bg"
@@ -129,8 +130,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toEndOf="@+id/edit_text_servings"
-        app:layout_constraintTop_toTopOf="@+id/edit_text_servings"
+        app:layout_constraintStart_toEndOf="@+id/edit_txt_servings"
+        app:layout_constraintTop_toTopOf="@+id/edit_txt_servings"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintWidth_percent=".35"
         android:layout_marginStart="5dp"
@@ -144,14 +145,14 @@
         android:fontFamily="@font/poppins"
         android:text="@string/min"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_text_prep"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_txt_prep"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toEndOf="@+id/edit_text_prep"
-        app:layout_constraintTop_toTopOf="@+id/edit_text_prep" />
+        app:layout_constraintStart_toEndOf="@+id/edit_txt_prep"
+        app:layout_constraintTop_toTopOf="@+id/edit_txt_prep" />
 
     <EditText
-        android:id="@+id/edit_text_cook"
+        android:id="@+id/edit_txt_cook"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -167,8 +168,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toEndOf="@+id/edit_text_servings"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_prep"
+        app:layout_constraintStart_toEndOf="@+id/edit_txt_servings"
+        app:layout_constraintTop_toBottomOf="@+id/edit_txt_prep"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintWidth_percent=".35" />
 
@@ -180,14 +181,14 @@
         android:fontFamily="@font/poppins"
         android:text="@string/min"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_text_cook"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_txt_cook"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toEndOf="@+id/edit_text_cook"
-        app:layout_constraintTop_toTopOf="@+id/edit_text_cook" />
+        app:layout_constraintStart_toEndOf="@+id/edit_txt_cook"
+        app:layout_constraintTop_toTopOf="@+id/edit_txt_cook" />
 
     <EditText
-        android:id="@+id/edit_text_new_ingredient"
+        android:id="@+id/edit_txt_new_ingredient"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -198,12 +199,13 @@
         android:paddingRight="20dp"
         android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/edit_text_name"
+        app:layout_constraintEnd_toEndOf="@+id/edit_txt_name"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="@+id/edit_text_name"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_cook"
+        app:layout_constraintStart_toStartOf="@+id/edit_txt_name"
+        app:layout_constraintTop_toBottomOf="@id/edit_txt_cook"
         app:layout_constraintVertical_bias="0"
-        app:layout_constraintWidth_percent=".5" />
+        app:layout_constraintWidth_percent=".5"
+        android:inputType="textPersonName"/>
 
     <Button
         android:id="@+id/button_add_ingredient"
@@ -213,10 +215,10 @@
         android:layout_marginEnd="10dp"
         android:text="@string/add"
         android:textColor="@color/textonpink"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_text_new_ingredient"
-        app:layout_constraintEnd_toEndOf="@+id/edit_text_name"
-        app:layout_constraintStart_toEndOf="@+id/edit_text_new_ingredient"
-        app:layout_constraintTop_toTopOf="@+id/edit_text_new_ingredient" />
+        app:layout_constraintBottom_toBottomOf="@+id/edit_txt_new_ingredient"
+        app:layout_constraintEnd_toEndOf="@+id/edit_txt_name"
+        app:layout_constraintStart_toEndOf="@+id/edit_txt_new_ingredient"
+        app:layout_constraintTop_toTopOf="@+id/edit_txt_new_ingredient" />
 
     <ListView
         android:id="@+id/list_view_ingredients"
@@ -228,12 +230,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_new_ingredient"
+        app:layout_constraintTop_toBottomOf="@+id/edit_txt_new_ingredient"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintWidth_percent=".8" />
 
         <EditText
-            android:id="@+id/edit_text_new_direction"
+            android:id="@+id/edit_txt_new_direction"
             android:layout_marginTop="5dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -244,12 +246,13 @@
             android:paddingRight="20dp"
             android:paddingBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/edit_text_new_ingredient"
+            app:layout_constraintEnd_toEndOf="@+id/edit_txt_new_ingredient"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="@+id/edit_text_new_ingredient"
+            app:layout_constraintStart_toStartOf="@+id/edit_txt_new_ingredient"
             app:layout_constraintTop_toBottomOf="@+id/list_view_ingredients"
             app:layout_constraintVertical_bias="0"
-            app:layout_constraintWidth_percent=".5" />
+            app:layout_constraintWidth_percent=".5"
+            android:inputType="textPersonName"/>
 
         <Button
             android:id="@+id/button_add_direction"
@@ -257,10 +260,10 @@
             android:layout_height="wrap_content"
             android:text="@string/add"
             android:textColor="@color/textonpink"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_text_new_direction"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_txt_new_direction"
             app:layout_constraintEnd_toEndOf="@+id/button_add_ingredient"
             app:layout_constraintStart_toStartOf="@+id/button_add_ingredient"
-            app:layout_constraintTop_toTopOf="@+id/edit_text_new_direction" />
+            app:layout_constraintTop_toTopOf="@+id/edit_txt_new_direction" />
 
         <ListView
             android:id="@+id/list_view_directions"
@@ -271,7 +274,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent=".2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_new_direction"
+            app:layout_constraintTop_toBottomOf="@+id/edit_txt_new_direction"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintWidth_percent=".8"
             android:layout_marginTop="10dp"/>

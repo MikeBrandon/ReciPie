@@ -11,16 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.scorpysmurf.recipie2.MyRecipesActivity;
 import com.scorpysmurf.recipie2.OnlineSavedRecipesActivity;
 import com.scorpysmurf.recipie2.R;
+import com.scorpysmurf.recipie2.RecipeEditorActivity;
 
 public class RecipesFragment extends Fragment {
 
     View view;
     FloatingActionButton fabDownloads;
-//    Button btnAddNewRecipe, btnViewRecipes;
+    ImageView btnViewRecipes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +46,8 @@ public class RecipesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         fabDownloads = view.findViewById(R.id.recipes_floating_action_button);
+        btnViewRecipes = view.findViewById(R.id.button_view_recipe);
+
         fabDownloads.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,8 +58,14 @@ public class RecipesFragment extends Fragment {
             }
         });
 
-//        btnAddNewRecipe = view.findViewById(R.id.button_add_recipe);
-//        btnViewRecipes = view.findViewById(R.id.button_view_recipe);
+        btnViewRecipes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Intent intent = new Intent(getActivity(), MyRecipesActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 }

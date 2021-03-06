@@ -11,6 +11,9 @@
         android:roundIcon="@raw/pink_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReciPie2">
+        <activity android:name=".RecipeViewActivity" />
+        <activity android:name=".RecipeEditorActivity" />
+        <activity android:name=".MyRecipesActivity" />
         <activity android:name=".OnlineSavedRecipesActivity"></activity>
         <activity android:name=".OnlineRecipeViewActivity" />
         <activity android:name=".LoginSignupActivity" />
@@ -23,13 +26,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".MainActivity">
-
-
-
-        </activity>
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

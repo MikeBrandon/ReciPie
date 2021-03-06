@@ -63,7 +63,9 @@ public class DownloaderFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progress_bar);
 
-        sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2.mainactivity",Context.MODE_PRIVATE);
+        sharedPreferences = getActivity()
+                .getApplicationContext()
+                .getSharedPreferences("com.scorpysmurf.recipie2.mainactivity",Context.MODE_PRIVATE);
 
 
         webView = view.findViewById(R.id.web_view);
@@ -145,7 +147,9 @@ public class DownloaderFragment extends Fragment {
                 MainActivity.urlsArrayAdapter.notifyDataSetChanged();
                 MainActivity.titlesArrayAdapter.notifyDataSetChanged();
 
-                SharedPreferences sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2.mainactivity", Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getActivity()
+                        .getApplicationContext()
+                        .getSharedPreferences("com.scorpysmurf.recipie2.mainactivity", Context.MODE_PRIVATE);
                 HashSet<String> urlSet= new HashSet<>(MainActivity.urls);
                 HashSet<String> titleSet = new HashSet<>(MainActivity.urlTitles);
 
