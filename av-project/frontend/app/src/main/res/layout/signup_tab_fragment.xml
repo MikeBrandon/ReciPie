@@ -83,7 +83,7 @@
         android:background="@drawable/edit_text_bg"/>
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/sign_up_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_bg"
