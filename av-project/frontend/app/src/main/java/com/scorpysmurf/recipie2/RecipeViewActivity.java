@@ -7,6 +7,7 @@ import androidx.core.app.NotificationManagerCompat;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -65,9 +66,9 @@ public class RecipeViewActivity extends AppCompatActivity {
     TextView timerText;
     Button btnAction;
 
-    MediaPlayer mediaPlayer;
+    Intent timerServiceIntent;
 
-    private NotificationManagerCompat notificationManagerCompat;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,6 @@ public class RecipeViewActivity extends AppCompatActivity {
         fabTimer = findViewById(R.id.fab_timer);
         fabDelete = findViewById(R.id.fab_delete);
         dialog = new Dialog(this);
-        notificationManagerCompat = NotificationManagerCompat.from(this);
 
         if(recipeID != -1) {
             name = MyRecipesActivity.name.get(recipeID);
@@ -239,7 +239,9 @@ public class RecipeViewActivity extends AppCompatActivity {
                                 slider.setEnabled(false);
                                 btnAction.setText(getString(R.string.stop));
 
-                                
+                                timerServiceIntent = new Intent(RecipeViewActivity.this,TimerService.class);
+                                timerServiceIntent.putExtra("time",slider.getProgress());
+                                startService(timerServiceIntent);
 
                                 countDownTimer = new CountDownTimer(slider.getProgress() * 1000,1000) {
 
@@ -274,22 +276,12 @@ public class RecipeViewActivity extends AppCompatActivity {
 
                                         mediaPlayer.start();
 
-                                        Notification notification = new NotificationCompat.Builder(RecipeViewActivity.this, App.CHANNEL_ID)
-                                                .setSmallIcon(R.raw.timerb1)
-                                                .setContentTitle(getString(R.string.recipie_timer))
-                                                .setContentText(getString(R.string.recipie_desc))
-                                                .setColor(getColor(R.color.pink100))
-                                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                                .setCategory(NotificationCompat.CATEGORY_ALARM)
-                                                .build();
-
-                                        notificationManagerCompat.notify(1, notification);
-
                                         countdownIsActive = false;
                                         slider.setEnabled(true);
                                         slider.setProgress(1800);
                                         btnAction.setText(getString(R.string.start));
                                         timerText.setText(getString(R.string._30_00));
+                                        stopService(timerServiceIntent);
 
                                     }
                                 }.start();
@@ -302,6 +294,7 @@ public class RecipeViewActivity extends AppCompatActivity {
                                 btnAction.setText(getString(R.string.start));
                                 countDownTimer.cancel();
                                 timerText.setText(getString(R.string._30_00));
+                                stopService(timerServiceIntent);
 
                             }
                         }

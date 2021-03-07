@@ -29,6 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+        <service android:name=".TimerService" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -58,5 +58,6 @@
     <string name="cln">:</string>
     <string name="stop">Stop</string>
     <string name="recipie_timer">ReciPie Timer</string>
-    <string name="recipie_desc">Check on Your Food</string>
+    <string name="recipie_desc">Time is Up!!! Check on Your Food</string>
+    <string name="timer_run">You Have a Timer Running Currently</string>
 </resources>
