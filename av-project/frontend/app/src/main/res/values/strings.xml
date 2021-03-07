@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ReciPie</string>
+    <string name="app_name" translatable="false">ReciPie</string>
     <string name="next">Next</string>
     <string name="obOneTitle">Become A Master Chef</string>
     <string name="obOneDescription">Find Recipes from the Master Chefs all around the World to fulfill your cravings</string>
@@ -70,4 +70,10 @@
     <string name="delete_grocery">Do You Want to Delete This Grocery</string>
     <string name="grocery_clear">Grocery List Cleared</string>
     <string name="grocery_clearance">Do You Want to Clear Your Grocery List</string>
+    <string name="choose_language">Choose Language</string>
+    <string name="choose_alarm_sound">Choose Alarm Sound</string>
+    <string name="alarm1">Alarm 1</string>
+    <string name="alarm2">Alarm 2</string>
+    <string name="alarm3">Alarm 3</string>
+    <string name="alarm4">Alarm 4</string>
 </resources>

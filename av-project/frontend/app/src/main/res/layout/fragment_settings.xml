@@ -48,16 +48,6 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="false" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floating_action_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_app_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_app_name" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
@@ -69,6 +59,103 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1">
+
+        <Spinner
+            android:id="@+id/language_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/Languages"
+            android:gravity="center"
+            android:paddingTop="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/choose_language_text"
+            app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/choose_language_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.1"
+            android:layout_margin="10dp"
+            android:textSize="30sp"
+            android:text="@string/choose_language"
+            android:fontFamily="@font/poppins"/>
+
+        <TextView
+            android:id="@+id/choose_alarm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/poppins"
+            android:text="@string/choose_alarm_sound"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/language_spinner"
+            app:layout_constraintVertical_bias="0.1" />
+
+        <Button
+            android:id="@+id/btn_alarm_1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/choose_alarm_text"
+            app:layout_constraintVertical_bias="0"
+            android:text="@string/alarm1"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/textonpink"/>
+
+        <Button
+            android:id="@+id/btn_alarm_2"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_alarm_1"
+            app:layout_constraintVertical_bias="0"
+            android:text="@string/alarm2"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/textonpink"/>
+
+        <Button
+            android:id="@+id/btn_alarm_3"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_alarm_2"
+            app:layout_constraintVertical_bias="0"
+            android:text="@string/alarm3"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/textonpink"/>
+
+        <Button
+            android:id="@+id/btn_alarm_4"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_alarm_3"
+            app:layout_constraintVertical_bias="0"
+            android:text="@string/alarm4"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/textonpink"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
