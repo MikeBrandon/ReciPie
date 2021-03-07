@@ -120,7 +120,7 @@ public class RecipeEditorActivity extends AppCompatActivity {
         addIngredientBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ingredients.add(String.valueOf(ingredientText.getText()));
+                ingredients.add(ingredientText.getText().toString().trim());
                 ingredientsAdapter.notifyDataSetChanged();
                 ingredientText.setText("");
             }
@@ -129,7 +129,7 @@ public class RecipeEditorActivity extends AppCompatActivity {
         addDirectionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                directions.add(String.valueOf(directionText.getText()));
+                directions.add(directionText.getText().toString().trim());
                 directionsAdapter.notifyDataSetChanged();
                 directionText.setText("");
             }
@@ -139,59 +139,130 @@ public class RecipeEditorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                name = "" + nameText.getText();
-                servings = "" + servingsText.getText();
-                prep = "" + prepText.getText();
-                cook = "" + cookText.getText();
+                if (!validName() | !validCook() | !validPrep() | !validServings() | !validDirections() | !validIngredients()){
 
-                MyRecipesActivity.recipes.add(new Recipe(name,servings, prep, cook));
-                MyRecipesActivity.adapter.notifyDataSetChanged();
+                    Toast.makeText(RecipeEditorActivity.this, getString(R.string.try_again), Toast.LENGTH_SHORT).show();
 
-                String sDirections = null, sIngredients = null;
+                } else {
 
-                try {
-                    sDirections = ObjectSerializer.serialize(directions);
-                    sIngredients = ObjectSerializer.serialize(ingredients);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    name = nameText.getText().toString().trim();
+                    servings = servingsText.getText().toString().trim();
+                    prep = prepText.getText().toString().trim();
+                    cook = cookText.getText().toString().trim();
+
+                    MyRecipesActivity.recipes.add(new Recipe(name, servings, prep, cook));
+                    MyRecipesActivity.adapter.notifyDataSetChanged();
+
+                    String sDirections = null, sIngredients = null;
+
+                    try {
+                        sDirections = ObjectSerializer.serialize(directions);
+                        sIngredients = ObjectSerializer.serialize(ingredients);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    MyRecipesActivity.name.add(name);
+                    MyRecipesActivity.servings.add(servings);
+                    MyRecipesActivity.prep.add(prep);
+                    MyRecipesActivity.cook.add(cook);
+                    MyRecipesActivity.directions.add(sDirections);
+                    MyRecipesActivity.ingredients.add(sIngredients);
+
+                    MyRecipesActivity.nameAdapter.notifyDataSetChanged();
+                    MyRecipesActivity.servingsAdapter.notifyDataSetChanged();
+                    MyRecipesActivity.prepAdapter.notifyDataSetChanged();
+                    MyRecipesActivity.cookAdapter.notifyDataSetChanged();
+                    MyRecipesActivity.directionsAdapter.notifyDataSetChanged();
+                    MyRecipesActivity.ingredientsAdapter.notifyDataSetChanged();
+
+                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2.myrecipes", MODE_PRIVATE);
+                    HashSet<String> nameSet = new HashSet<>(MyRecipesActivity.name);
+                    HashSet<String> servingSet = new HashSet<>(MyRecipesActivity.servings);
+                    HashSet<String> prepSet = new HashSet<>(MyRecipesActivity.prep);
+                    HashSet<String> cookSet = new HashSet<>(MyRecipesActivity.cook);
+                    HashSet<String> directionSet = new HashSet<>(MyRecipesActivity.directions);
+                    HashSet<String> ingredientSet = new HashSet<>(MyRecipesActivity.ingredients);
+
+                    sharedPreferences
+                            .edit()
+                            .putStringSet("rName", nameSet)
+                            .putStringSet("rServings", servingSet)
+                            .putStringSet("rPrep", prepSet)
+                            .putStringSet("rCook", cookSet)
+                            .putStringSet("rDirections", directionSet)
+                            .putStringSet("rIngredients", ingredientSet)
+                            .apply();
+
+                    Toast.makeText(RecipeEditorActivity.this, name + " " + RecipeEditorActivity.this.getString(R.string.saved), Toast.LENGTH_LONG).show();
+
+                    finish();
                 }
-
-                MyRecipesActivity.name.add(name);
-                MyRecipesActivity.servings.add(servings);
-                MyRecipesActivity.prep.add(prep);
-                MyRecipesActivity.cook.add(cook);
-                MyRecipesActivity.directions.add(sDirections);
-                MyRecipesActivity.ingredients.add(sIngredients);
-
-                MyRecipesActivity.nameAdapter.notifyDataSetChanged();
-                MyRecipesActivity.servingsAdapter.notifyDataSetChanged();
-                MyRecipesActivity.prepAdapter.notifyDataSetChanged();
-                MyRecipesActivity.cookAdapter.notifyDataSetChanged();
-                MyRecipesActivity.directionsAdapter.notifyDataSetChanged();
-                MyRecipesActivity.ingredientsAdapter.notifyDataSetChanged();
-
-                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2.myrecipes",MODE_PRIVATE);
-                HashSet<String> nameSet = new HashSet<>(MyRecipesActivity.name);
-                HashSet<String> servingSet = new HashSet<>(MyRecipesActivity.servings);
-                HashSet<String> prepSet = new HashSet<>(MyRecipesActivity.prep);
-                HashSet<String> cookSet = new HashSet<>(MyRecipesActivity.cook);
-                HashSet<String> directionSet = new HashSet<>(MyRecipesActivity.directions);
-                HashSet<String> ingredientSet = new HashSet<>(MyRecipesActivity.ingredients);
-
-                sharedPreferences
-                        .edit()
-                        .putStringSet("rName",nameSet)
-                        .putStringSet("rServings",servingSet)
-                        .putStringSet("rPrep",prepSet)
-                        .putStringSet("rCook",cookSet)
-                        .putStringSet("rDirections",directionSet)
-                        .putStringSet("rIngredients",ingredientSet)
-                        .apply();
-
-                Toast.makeText(RecipeEditorActivity.this, name + " " + RecipeEditorActivity.this.getString(R.string.saved), Toast.LENGTH_LONG).show();
-
-                finish();
             }
         });
     }
+
+    private boolean validName () {
+        String txtName = nameText.getText().toString().trim();
+
+        if(txtName.isEmpty()) {
+            nameText.setError(getString(R.string.field_cant_be_empty));
+            return false;
+        }
+        return true;
+
+    }
+
+    private boolean validServings () {
+        String txtServings = servingsText.getText().toString().trim();
+
+        if(txtServings.isEmpty()) {
+            servingsText.setError(getString(R.string.field_cant_be_empty));
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validPrep () {
+        String txtPrep = prepText.getText().toString().trim();
+
+        if(txtPrep.isEmpty()) {
+            prepText.setError(getString(R.string.field_cant_be_empty));
+            return false;
+        }
+        return true;
+
+    }
+
+    private boolean validCook () {
+        String txtCook = cookText.getText().toString().trim();
+
+        if(txtCook.isEmpty()) {
+            cookText.setError(getString(R.string.field_cant_be_empty));
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validIngredients () {
+        ArrayList<String> txtIngredients = ingredients;
+
+        if(txtIngredients.isEmpty()) {
+            ingredientText.setError(getString(R.string.add_ingredients));
+            return false;
+        }
+        return true;
+
+    }
+
+    private boolean validDirections () {
+        ArrayList<String> txtDirections = directions;
+
+        if(txtDirections.isEmpty()) {
+            directionText.setError(getString(R.string.add_directions));
+            return false;
+        }
+        return true;
+    }
+
 }

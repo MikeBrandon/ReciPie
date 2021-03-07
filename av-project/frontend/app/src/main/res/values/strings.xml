@@ -64,4 +64,7 @@
     <string name="please_enter_a_valid_email_address">Please Enter a Valid Email Address</string>
     <string name="weak_pass">Password Too Weak</string>
     <string name="short_pass">Password must be 6 or More Characters</string>
+    <string name="try_again">Try Again</string>
+    <string name="add_ingredients">Add Ingredients</string>
+    <string name="add_directions">Add Directions</string>
 </resources>
