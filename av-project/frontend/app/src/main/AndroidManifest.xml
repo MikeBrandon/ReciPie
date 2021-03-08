@@ -12,6 +12,7 @@
         android:roundIcon="@raw/pink_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReciPie2">
+        <activity android:name=".ForgotPasswordActivity"/>
         <activity android:name=".RecipeViewActivity" />
         <activity android:name=".RecipeEditorActivity" />
         <activity android:name=".MyRecipesActivity" />
@@ -28,8 +29,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" android:configChanges="locale" />
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="locale" />
+
         <service android:name=".TimerService" />
+        <receiver android:name=".ReminderBroadcastReceiver" />
 
         <meta-data
             android:name="preloaded_fonts"

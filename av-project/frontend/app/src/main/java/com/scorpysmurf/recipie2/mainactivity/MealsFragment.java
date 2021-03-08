@@ -1,8 +1,11 @@
 package com.scorpysmurf.recipie2.mainactivity;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -27,6 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.scorpysmurf.recipie2.MainActivity;
 import com.scorpysmurf.recipie2.OnlineSavedRecipesActivity;
 import com.scorpysmurf.recipie2.R;
+import com.scorpysmurf.recipie2.ReminderBroadcastReceiver;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -160,6 +164,23 @@ public class MealsFragment extends Fragment {
                 }
             }
         });
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        Intent intent = new Intent(getActivity(), ReminderBroadcastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(),0,intent,0);
+
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+        long timeAtActivityExit = System.currentTimeMillis();
+
+        long waitTimeMillis = 64800 * 1000;
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP,timeAtActivityExit+waitTimeMillis,pendingIntent);
 
     }
 

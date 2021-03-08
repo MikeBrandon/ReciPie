@@ -86,8 +86,11 @@ public class SignupTabFragment extends Fragment {
         if (passInput.isEmpty()) {
             confPassET.setError(getString(R.string.field_cant_be_empty));
             return false;
-        } else if(passET.length()<6) {
-            passET.setError(getString(R.string.short_pass));
+        } else if(confPassET.length()<6) {
+            confPassET.setError(getString(R.string.short_pass));
+            return false;
+        } else if(!confPassET.getText().toString().equals(passET.getText().toString())) {
+            confPassET.setError(getString(R.string.match_pass));
             return false;
         } else if(!PASSWORD_PATTERN.matcher(passInput).matches()) {
             confPassET.setError(getString(R.string.weak_pass));

@@ -78,5 +78,12 @@
     <string name="alarm4">Alarm 4</string>
     <string name="english">English</string>
     <string name="espa_ol">Español</string>
-    <string name="fran_ais">français</string>
+    <string name="fran_ais">Français</string>
+    <string name="new_password">New Password</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="password_reset">Password Reset</string>
+    <string name="match_pass">Passwords do not match</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="connected">Connected</string>
+    <string name="you_still_have_items">You still have Items in your Grocery List</string>
 </resources>
