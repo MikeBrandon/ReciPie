@@ -83,4 +83,6 @@
     <string name="reset_password">Reset Password</string>
     <string name="password_reset">Password Reset</string>
     <string name="match_pass">Passwords do not match</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="connected">Connected</string>
 </resources>

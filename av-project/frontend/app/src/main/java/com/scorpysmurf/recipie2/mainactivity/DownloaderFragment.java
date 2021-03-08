@@ -2,8 +2,10 @@ package com.scorpysmurf.recipie2.mainactivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -23,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.scorpysmurf.recipie2.ConnectivityBroadcastReceiver;
 import com.scorpysmurf.recipie2.MainActivity;
 import com.scorpysmurf.recipie2.OnlineSavedRecipesActivity;
 import com.scorpysmurf.recipie2.R;
@@ -54,7 +57,14 @@ public class DownloaderFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_downloader, container, false);
         // Inflate the layout for this fragment
+
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
     }
 
     @Override

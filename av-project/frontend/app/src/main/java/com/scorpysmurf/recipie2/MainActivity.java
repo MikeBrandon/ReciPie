@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<String> urlTitles;
     public static ArrayAdapter titlesArrayAdapter;
     public static ArrayAdapter urlsArrayAdapter;
+    ConnectivityBroadcastReceiver connectivityBroadcastReceiver = new ConnectivityBroadcastReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,23 @@ public class MainActivity extends AppCompatActivity {
             urls = new ArrayList<String>(urlSet);
             urlTitles = new ArrayList<String>(titleSet);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(connectivityBroadcastReceiver,intentFilter);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        unregisterReceiver(connectivityBroadcastReceiver);
+
     }
 
     private void bottomMenu() {
