@@ -1,5 +1,6 @@
 package com.scorpysmurf.recipie2.loginsignup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.scorpysmurf.recipie2.ForgotPasswordActivity;
 import com.scorpysmurf.recipie2.R;
 
 import java.util.regex.Pattern;
@@ -58,6 +60,16 @@ public class LoginTabFragment extends Fragment {
 
                 validEmail();
                 validPassword();
+
+            }
+        });
+
+        forgotpass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), ForgotPasswordActivity.class);
+                startActivity(intent);
 
             }
         });
