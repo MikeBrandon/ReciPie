@@ -71,10 +71,10 @@
             android:textSize="50sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/my_recipes_recycler_view"
-            app:layout_constraintEnd_toEndOf="@+id/my_recipes_recycler_view"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent=".1"
             app:layout_constraintHorizontal_bias=".5"
-            app:layout_constraintStart_toStartOf="@+id/my_recipes_recycler_view"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1" />
 
@@ -95,14 +95,14 @@
             android:id="@+id/fab_help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:src="@android:drawable/ic_menu_help"
-            app:layout_constraintBottom_toBottomOf="@+id/my_recipes_recycler_view"
-            app:layout_constraintEnd_toEndOf="@+id/my_recipes_recycler_view"
+            app:layout_constraintBottom_toBottomOf="@+id/online_saves_list_view"
+            app:layout_constraintEnd_toEndOf="@+id/online_saves_list_view"
+            app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toStartOf="@+id/my_recipes_recycler_view"
             app:layout_constraintTop_toTopOf="@+id/my_recipes_recycler_view"
-            app:layout_constraintVertical_bias="1"
-            app:layout_constraintHorizontal_bias="1"
-            android:layout_margin="20dp"/>
+            app:layout_constraintVertical_bias="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

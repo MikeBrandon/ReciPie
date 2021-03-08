@@ -1,9 +1,13 @@
 package com.scorpysmurf.recipie2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -61,6 +65,8 @@ public class RecipeViewActivity extends AppCompatActivity {
     SeekBar slider;
     TextView timerText;
     Button btnAction;
+
+    Intent timerServiceIntent;
 
     MediaPlayer mediaPlayer;
 
@@ -230,9 +236,12 @@ public class RecipeViewActivity extends AppCompatActivity {
                             if(!countdownIsActive) {
 
                                 countdownIsActive = true;
-                                slider.setProgress(1800);
                                 slider.setEnabled(false);
                                 btnAction.setText(getString(R.string.stop));
+
+                                timerServiceIntent = new Intent(RecipeViewActivity.this,TimerService.class);
+                                timerServiceIntent.putExtra("time",slider.getProgress());
+                                startService(timerServiceIntent);
 
                                 countDownTimer = new CountDownTimer(slider.getProgress() * 1000,1000) {
 
@@ -248,7 +257,7 @@ public class RecipeViewActivity extends AppCompatActivity {
 
                                         timerText.setText(getString(R.string._00_00));
 
-                                        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2",MODE_PRIVATE);
+                                        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2",Context.MODE_PRIVATE);
                                         int alm = sharedPreferences.getInt("alm",1);
 
                                         switch (alm) {
@@ -269,8 +278,10 @@ public class RecipeViewActivity extends AppCompatActivity {
 
                                         countdownIsActive = false;
                                         slider.setEnabled(true);
+                                        slider.setProgress(1800);
                                         btnAction.setText(getString(R.string.start));
                                         timerText.setText(getString(R.string._30_00));
+                                        stopService(timerServiceIntent);
 
                                     }
                                 }.start();
@@ -279,9 +290,11 @@ public class RecipeViewActivity extends AppCompatActivity {
 
                                 countdownIsActive = false;
                                 slider.setEnabled(true);
+                                slider.setProgress(1800);
                                 btnAction.setText(getString(R.string.start));
                                 countDownTimer.cancel();
                                 timerText.setText(getString(R.string._30_00));
+                                stopService(timerServiceIntent);
 
                             }
                         }

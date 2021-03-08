@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ReciPie</string>
+    <string name="app_name" translatable="false">ReciPie</string>
     <string name="next">Next</string>
     <string name="obOneTitle">Become A Master Chef</string>
     <string name="obOneDescription">Find Recipes from the Master Chefs all around the World to fulfill your cravings</string>
@@ -21,7 +21,6 @@
     <string name="downloader">Downloader</string>
     <string name="groceries">Groceries</string>
     <string name="pantry">Pantry</string>
-    <string name="meals">Meals</string>
     <string name="settings">Settings</string>
     <string name="name">Name</string>
     <string name="servings">Servings</string>
@@ -57,4 +56,27 @@
     <string name="timer">Timer</string>
     <string name="cln">:</string>
     <string name="stop">Stop</string>
+    <string name="recipie_timer">ReciPie Timer</string>
+    <string name="recipie_desc">Time is Up!!! Check on Your Food</string>
+    <string name="timer_run">You Have a Timer Running Currently</string>
+    <string name="field_cant_be_empty">Field can\'t be Empty</string>
+    <string name="please_enter_a_valid_email_address">Please Enter a Valid Email Address</string>
+    <string name="weak_pass">Password Too Weak</string>
+    <string name="short_pass">Password must be 6 or More Characters</string>
+    <string name="try_again">Try Again</string>
+    <string name="add_ingredients">Add Ingredients</string>
+    <string name="add_directions">Add Directions</string>
+    <string name="grocery">Grocery</string>
+    <string name="delete_grocery">Do You Want to Delete This Grocery</string>
+    <string name="grocery_clear">Grocery List Cleared</string>
+    <string name="grocery_clearance">Do You Want to Clear Your Grocery List</string>
+    <string name="choose_language">Choose Language</string>
+    <string name="choose_alarm_sound">Choose Alarm Sound</string>
+    <string name="alarm1">Alarm 1</string>
+    <string name="alarm2">Alarm 2</string>
+    <string name="alarm3">Alarm 3</string>
+    <string name="alarm4">Alarm 4</string>
+    <string name="english">English</string>
+    <string name="espa_ol">Español</string>
+    <string name="fran_ais">français</string>
 </resources>

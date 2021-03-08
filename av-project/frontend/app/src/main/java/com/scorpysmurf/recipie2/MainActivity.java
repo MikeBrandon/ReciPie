@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,7 @@ import com.scorpysmurf.recipie2.mainactivity.SettingsFragment;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
