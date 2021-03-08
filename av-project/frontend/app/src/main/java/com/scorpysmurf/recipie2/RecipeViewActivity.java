@@ -257,7 +257,7 @@ public class RecipeViewActivity extends AppCompatActivity {
 
                                         timerText.setText(getString(R.string._00_00));
 
-                                        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2",MODE_PRIVATE);
+                                        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2",Context.MODE_PRIVATE);
                                         int alm = sharedPreferences.getInt("alm",1);
 
                                         switch (alm) {

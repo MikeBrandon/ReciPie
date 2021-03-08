@@ -76,4 +76,7 @@
     <string name="alarm2">Alarm 2</string>
     <string name="alarm3">Alarm 3</string>
     <string name="alarm4">Alarm 4</string>
+    <string name="english">English</string>
+    <string name="espa_ol">Español</string>
+    <string name="fran_ais">français</string>
 </resources>

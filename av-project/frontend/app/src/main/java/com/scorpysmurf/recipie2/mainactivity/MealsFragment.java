@@ -63,7 +63,7 @@ public class MealsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2.groceries", Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences("com.scorpysmurf.recipie2.groceries", Context.MODE_PRIVATE);
 
         listView = view.findViewById(R.id.groceries_list_view);
         resetButton = view.findViewById(R.id.fab_clear_groceries);

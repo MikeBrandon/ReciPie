@@ -60,18 +60,50 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1">
 
-        <Spinner
-            android:id="@+id/language_spinner"
+        <Button
+            android:id="@+id/btn_en"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/Languages"
             android:gravity="center"
-            android:paddingTop="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/choose_language_text"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintVertical_bias="0"
+            android:text="@string/english"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/textonpink"
+            android:layout_margin="5dp"/>
+
+        <Button
+            android:id="@+id/btn_fr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_en"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/choose_language_text"
+            app:layout_constraintVertical_bias="0"
+            android:text="@string/fran_ais"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/textonpink"
+            android:layout_margin="5dp"/>
+
+        <Button
+            android:id="@+id/btn_es"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_en"
+            app:layout_constraintTop_toBottomOf="@+id/choose_language_text"
+            app:layout_constraintVertical_bias="0"
+            android:text="@string/espa_ol"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/textonpink"
+            android:layout_margin="5dp"/>
 
         <TextView
             android:id="@+id/choose_language_text"
@@ -98,7 +130,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/language_spinner"
+            app:layout_constraintTop_toBottomOf="@+id/btn_en"
             app:layout_constraintVertical_bias="0.1" />
 
         <Button
