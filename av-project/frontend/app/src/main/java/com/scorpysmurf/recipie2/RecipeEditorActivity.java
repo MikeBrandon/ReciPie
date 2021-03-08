@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,9 +32,11 @@ public class RecipeEditorActivity extends AppCompatActivity {
     ArrayAdapter directionsAdapter;
     ArrayAdapter ingredientsAdapter;
 
-    TextView nameText, servingsText, prepText, cookText, ingredientText, directionText;
+    TextView nameText, servingsText, prepText, cookText, directionText;
     ListView ingredientsListView, directionsListView;
     Button addIngredientBtn, addDirectionBtn, saveBtn;
+
+    AutoCompleteTextView ingredientText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
