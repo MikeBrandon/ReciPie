@@ -93,6 +93,7 @@ public class SettingsFragment extends Fragment {
                 mediaPlayer = MediaPlayer.create(getActivity(),R.raw.alm_default);
                 mediaPlayer.start();
                 sharedPreferences.edit().putInt("alm",1).apply();
+                Toast.makeText(getActivity(), getString(R.string.saved), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -102,6 +103,7 @@ public class SettingsFragment extends Fragment {
                 mediaPlayer = MediaPlayer.create(getActivity(),R.raw.alm_buzzer);
                 mediaPlayer.start();
                 sharedPreferences.edit().putInt("alm",2).apply();
+                Toast.makeText(getActivity(), getString(R.string.saved), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -111,6 +113,7 @@ public class SettingsFragment extends Fragment {
                 mediaPlayer = MediaPlayer.create(getActivity(),R.raw.alm_chime);
                 mediaPlayer.start();
                 sharedPreferences.edit().putInt("alm",3).apply();
+                Toast.makeText(getActivity(), getString(R.string.saved), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -120,6 +123,7 @@ public class SettingsFragment extends Fragment {
                 mediaPlayer = MediaPlayer.create(getActivity(),R.raw.alm_jolly);
                 mediaPlayer.start();
                 sharedPreferences.edit().putInt("alm",4).apply();
+                Toast.makeText(getActivity(), getString(R.string.saved), Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -41,23 +41,23 @@
         android:layout_marginTop="20dp"
         android:inputType="textPassword"
         android:background="@drawable/edit_text_bg"/>
-    
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_bg"
+        android:fontFamily="@font/poppins"
+        android:text="@string/login"
+        android:textColor="@color/textonpink"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".8"
+        app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias=".8"
-        android:textSize="16sp"
-        android:text="@string/login"
-        android:textStyle="bold"
-        android:fontFamily="@font/poppins"
-        android:textColor="@color/textonpink"
-        android:background="@drawable/button_bg" />
+        app:layout_constraintWidth_percent=".8" />
 
     <TextView
         android:id="@+id/forgot_password"
