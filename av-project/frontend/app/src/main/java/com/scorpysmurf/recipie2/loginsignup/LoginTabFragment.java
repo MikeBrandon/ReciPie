@@ -1,17 +1,21 @@
 package com.scorpysmurf.recipie2.loginsignup;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.scorpysmurf.recipie2.ForgotPasswordActivity;
@@ -25,6 +29,7 @@ public class LoginTabFragment extends Fragment {
     TextView forgotpass;
     Button login;
     float v = 0;
+    ConstraintLayout constraintLayout;
 
     private final static Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}$");
@@ -38,6 +43,15 @@ public class LoginTabFragment extends Fragment {
         pass = root.findViewById(R.id.password);
         forgotpass = root.findViewById(R.id.forgot_password);
         login = root.findViewById(R.id.loginButton);
+        constraintLayout = root.findViewById(R.id.login_bg);
+
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),0);
+            }
+        });
 
         email.setTranslationX(800);
         pass.setTranslationX(800);
@@ -58,8 +72,7 @@ public class LoginTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                validEmail();
-                validPassword();
+                loginMethod();
 
             }
         });
@@ -74,7 +87,28 @@ public class LoginTabFragment extends Fragment {
             }
         });
 
+        pass.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+
+                    loginMethod();
+
+                }
+
+                return false;
+            }
+        });
+
         return root;
+    }
+
+    private void loginMethod () {
+
+        validEmail();
+        validPassword();
+
     }
 
     private boolean validEmail() {

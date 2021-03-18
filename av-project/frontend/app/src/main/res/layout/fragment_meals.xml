@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".mainactivity.MealsFragment"
-    android:background="@color/green25">
+    android:background="@color/green25"
+    android:id="@+id/groceries_bg">
 
     <ImageView
         android:id="@+id/bg"

@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -45,6 +47,7 @@ public class MealsFragment extends Fragment {
     Button addItemButton;
     FloatingActionButton resetButton;
     AutoCompleteTextView groceryTxt;
+    ConstraintLayout constraintLayout;
 
     SharedPreferences sharedPreferences;
 
@@ -78,6 +81,15 @@ public class MealsFragment extends Fragment {
         resetButton = view.findViewById(R.id.fab_clear_groceries);
         addItemButton = view.findViewById(R.id.button_add_grocery);
         groceryTxt = view.findViewById(R.id.edit_txt_new_grocery);
+        constraintLayout = view.findViewById(R.id.groceries_bg);
+
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),0);
+            }
+        });
 
         ArrayAdapter<String> autoAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,INGREDIENTS);
         groceryTxt.setAdapter(autoAdapter);

@@ -2,14 +2,17 @@ package com.scorpysmurf.recipie2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
@@ -21,6 +24,7 @@ public class LoginSignupActivity extends AppCompatActivity {
     ViewPager viewPager;
     Button skipButton;
     float v=0;
+    ConstraintLayout constraintLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,15 @@ public class LoginSignupActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
         skipButton = findViewById(R.id.skip_button);
+        constraintLayout = findViewById(R.id.loginsignup_bg);
+
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+            }
+        });
 
         tabLayout.addTab(tabLayout.newTab().setText(LoginSignupActivity.this.getString(R.string.login)));
         tabLayout.addTab(tabLayout.newTab().setText(LoginSignupActivity.this.getString(R.string.signup)));
