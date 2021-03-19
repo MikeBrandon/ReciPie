@@ -19,8 +19,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.scorpysmurf.recipie2.LoginSignupActivity;
 import com.scorpysmurf.recipie2.MainActivity;
 import com.scorpysmurf.recipie2.R;
 
@@ -35,6 +37,7 @@ public class SettingsFragment extends Fragment {
     Button btnAlm1, btnAlm2, btnAlm3, btnAlm4;
     SharedPreferences sharedPreferences;
     MediaPlayer mediaPlayer;
+    TextView logoutText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +66,8 @@ public class SettingsFragment extends Fragment {
         btnAlm2 = view.findViewById(R.id.btn_alarm_2);
         btnAlm3 = view.findViewById(R.id.btn_alarm_3);
         btnAlm4 = view.findViewById(R.id.btn_alarm_4);
+
+        logoutText = view.findViewById(R.id.logout_text);
 
         sharedPreferences = getActivity().getSharedPreferences("com.scorpysmurf.recipie2", Context.MODE_PRIVATE);
 
@@ -124,6 +129,17 @@ public class SettingsFragment extends Fragment {
                 mediaPlayer.start();
                 sharedPreferences.edit().putInt("alm",4).apply();
                 Toast.makeText(getActivity(), getString(R.string.saved), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        logoutText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), LoginSignupActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+
             }
         });
 

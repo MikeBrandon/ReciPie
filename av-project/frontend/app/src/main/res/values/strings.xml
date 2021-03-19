@@ -87,4 +87,5 @@
     <string name="connected">Connected</string>
     <string name="you_still_have_items">You still have Items in your Grocery List</string>
     <string name="hold_on_the_download_button_to_save_a_page">Hold on the Download Button to Save a Page</string>
+    <string name="log_out"><u>Log Out</u></string>
 </resources>
