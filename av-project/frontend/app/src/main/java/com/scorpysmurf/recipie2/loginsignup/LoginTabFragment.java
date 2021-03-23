@@ -3,6 +3,7 @@ package com.scorpysmurf.recipie2.loginsignup;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -12,13 +13,20 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.scorpysmurf.recipie2.ForgotPasswordActivity;
+import com.scorpysmurf.recipie2.MainActivity;
 import com.scorpysmurf.recipie2.R;
 
 import java.util.regex.Pattern;
@@ -30,6 +38,7 @@ public class LoginTabFragment extends Fragment {
     Button login;
     float v = 0;
     ConstraintLayout constraintLayout;
+    private FirebaseAuth mAuth;
 
     private final static Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}$");
@@ -44,6 +53,8 @@ public class LoginTabFragment extends Fragment {
         forgotpass = root.findViewById(R.id.forgot_password);
         login = root.findViewById(R.id.loginButton);
         constraintLayout = root.findViewById(R.id.login_bg);
+
+        mAuth = FirebaseAuth.getInstance();
 
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,9 +117,43 @@ public class LoginTabFragment extends Fragment {
 
     private void loginMethod () {
 
+        String emailInput = email.getText().toString().trim();
+        String passInput = pass.getText().toString().trim();
+
+
         validEmail();
         validPassword();
 
+        if (!validEmail() | !validPassword()) {
+            return;
+        } else {
+
+            mAuth.signInWithEmailAndPassword(emailInput, passInput)
+                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("Progress", "signInWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                nextAct();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("Progress", "signInWithEmail:failure", task.getException());
+                                Toast.makeText(getActivity(), "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+        }
+
+    }
+
+    private void nextAct() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     private boolean validEmail() {
