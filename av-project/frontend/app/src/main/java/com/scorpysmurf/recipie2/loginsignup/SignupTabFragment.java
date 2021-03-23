@@ -23,9 +23,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.scorpysmurf.recipie2.LoginSignupActivity;
 import com.scorpysmurf.recipie2.MainActivity;
@@ -125,11 +127,21 @@ public class SignupTabFragment extends Fragment {
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("Progress", "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(getActivity(), "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
                             }
                         }
-                    });
+                    })
+                    .addOnFailureListener(getActivity(), new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                        if (e instanceof FirebaseAuthException) {
+                            if (((FirebaseAuthException) e).getErrorCode() == "ERROR_EMAIL_ALREADY_IN_USE") {
+                                emailET.setError(getString(R.string.email_already_in_use));
+                            }
+
+                            Log.i("ERROR CODE: ", ((FirebaseAuthException) e).getErrorCode());
+                        }
+                    }
+            });
 
         }
     }

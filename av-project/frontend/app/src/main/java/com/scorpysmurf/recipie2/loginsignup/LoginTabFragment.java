@@ -29,11 +29,13 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.scorpysmurf.recipie2.ForgotPasswordActivity;
 import com.scorpysmurf.recipie2.MainActivity;
@@ -55,9 +57,6 @@ public class LoginTabFragment extends Fragment {
     LoginButton loginButton;
     SharedPreferences sharedPreferences;
     ProgressBar progressBar;
-
-    private final static Pattern PASSWORD_PATTERN =
-            Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}$");
 
     @Nullable
     @Override
@@ -187,11 +186,9 @@ public class LoginTabFragment extends Fragment {
         String emailInput = email.getText().toString().trim();
         String passInput = pass.getText().toString().trim();
 
-
         validEmail();
-        validPassword();
 
-        if (!validEmail() | !validPassword()) {
+        if (!validEmail()) {
             return;
         } else {
 
@@ -208,8 +205,20 @@ public class LoginTabFragment extends Fragment {
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("Progress", "signInWithEmail:failure", task.getException());
-                                Toast.makeText(getActivity(), "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    })
+                    .addOnFailureListener(getActivity(), new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            if (e instanceof FirebaseAuthException) {
+                                if (((FirebaseAuthException) e).getErrorCode() == "ERROR_USER_NOT_FOUND") {
+                                    email.setError(getString(R.string.user_not_found));
+                                } else if (((FirebaseAuthException) e).getErrorCode() == "ERROR_WRONG_PASSWORD") {
+                                    pass.setError(getString(R.string.incorrect_password));
+                                }
+
+                                Log.i("ERROR CODE: ", ((FirebaseAuthException) e).getErrorCode());
                             }
                         }
                     });
@@ -235,24 +244,6 @@ public class LoginTabFragment extends Fragment {
             return false;
         } else {
             email.setError(null);
-            return true;
-        }
-    }
-
-    private boolean validPassword() {
-        String passInput = pass.getText().toString().trim();
-
-        if (passInput.isEmpty()) {
-            pass.setError(getString(R.string.field_cant_be_empty));
-            return false;
-        } else if(pass.length()<6) {
-            pass.setError(getString(R.string.short_pass));
-            return false;
-        }else if(!PASSWORD_PATTERN.matcher(passInput).matches()) {
-            pass.setError(getString(R.string.weak_pass));
-            return false;
-        } else {
-            pass.setError(null);
             return true;
         }
     }
