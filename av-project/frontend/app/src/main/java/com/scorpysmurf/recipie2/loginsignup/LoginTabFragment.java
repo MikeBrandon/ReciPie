@@ -41,10 +41,6 @@ import com.scorpysmurf.recipie2.ForgotPasswordActivity;
 import com.scorpysmurf.recipie2.MainActivity;
 import com.scorpysmurf.recipie2.R;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.regex.Pattern;
-
 public class LoginTabFragment extends Fragment {
 
     EditText email, pass;

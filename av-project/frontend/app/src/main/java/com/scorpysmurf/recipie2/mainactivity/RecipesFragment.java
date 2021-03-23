@@ -10,14 +10,12 @@ import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.scorpysmurf.recipie2.MyRecipesActivity;
 import com.scorpysmurf.recipie2.OnlineSavedRecipesActivity;
 import com.scorpysmurf.recipie2.R;
-import com.scorpysmurf.recipie2.RecipeEditorActivity;
 
 public class RecipesFragment extends Fragment {
 

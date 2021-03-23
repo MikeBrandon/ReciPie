@@ -1,6 +1,5 @@
 package com.scorpysmurf.recipie2;
 
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
