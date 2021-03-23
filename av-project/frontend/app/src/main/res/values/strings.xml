@@ -90,4 +90,6 @@
     <string name="log_out"><u>Log Out</u></string>
     <string name="facebook_app_id" translatable="false">154133226579164</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb154133226579164</string>
+    <string name="delete_account"><u>Delete Account</u></string>
+    <string name="delete_acc">Are You Sure You want to Delete Your Account?</string>
 </resources>
