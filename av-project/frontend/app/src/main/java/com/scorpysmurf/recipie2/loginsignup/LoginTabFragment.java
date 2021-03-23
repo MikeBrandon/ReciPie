@@ -2,6 +2,7 @@ package com.scorpysmurf.recipie2.loginsignup;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +53,8 @@ public class LoginTabFragment extends Fragment {
     private FirebaseAuth mAuth;
     public static CallbackManager callbackManager;
     LoginButton loginButton;
+    SharedPreferences sharedPreferences;
+    ProgressBar progressBar;
 
     private final static Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}$");
@@ -67,6 +71,8 @@ public class LoginTabFragment extends Fragment {
         constraintLayout = root.findViewById(R.id.login_bg);
         loginButton = root.findViewById(R.id.fb_login);
         callbackManager = CallbackManager.Factory.create();
+        sharedPreferences = getActivity().getSharedPreferences("com.scorpysmurf.recipie2",Context.MODE_PRIVATE);
+        progressBar = root.findViewById(R.id.prog_bar);
 
         mAuth = FirebaseAuth.getInstance();
         loginButton.setReadPermissions("email", "public_profile");
@@ -162,6 +168,9 @@ public class LoginTabFragment extends Fragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("Progress", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            sharedPreferences.edit().putInt("loginType",2).apply();
+                            loginButton.setVisibility(View.GONE);
+                            progressBar.setVisibility(View.VISIBLE);
                             nextAct();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -194,6 +203,7 @@ public class LoginTabFragment extends Fragment {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("Progress", "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
+                                sharedPreferences.edit().putInt("loginType",1).apply();
                                 nextAct();
                             } else {
                                 // If sign in fails, display a message to the user.

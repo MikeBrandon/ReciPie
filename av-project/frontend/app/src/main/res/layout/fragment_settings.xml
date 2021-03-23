@@ -192,22 +192,11 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_alarm_3"
             app:layout_constraintVertical_bias="0" />
 
-        <ImageView
-            android:id="@+id/img_profile"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_margin="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_alarm_4"
-            app:layout_constraintVertical_bias="0" />
-
         <TextView
             android:id="@+id/logout_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="25dp"
             android:fontFamily="@font/poppins"
             android:text="@string/log_out"
             android:textColor="@android:color/holo_blue_dark"
@@ -215,8 +204,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_profile"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_alarm_4"
+            app:layout_constraintVertical_bias="0"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

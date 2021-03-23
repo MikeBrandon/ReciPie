@@ -25,6 +25,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.login.LoginManager;
+import com.facebook.login.widget.LoginButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.scorpysmurf.recipie2.LoginSignupActivity;
@@ -46,7 +50,11 @@ public class SettingsFragment extends Fragment {
     SharedPreferences sharedPreferences;
     MediaPlayer mediaPlayer;
     TextView logoutText;
-    ImageView profPic;
+    int loginType;
+    public static CallbackManager callbackManager;
+    FirebaseUser user;
+    AccessToken accessToken;
+    boolean isLoggedIn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,10 +85,17 @@ public class SettingsFragment extends Fragment {
         btnAlm4 = view.findViewById(R.id.btn_alarm_4);
 
         logoutText = view.findViewById(R.id.logout_text);
-
-        profPic = view.findViewById(R.id.img_profile);
+        callbackManager = CallbackManager.Factory.create();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         sharedPreferences = getActivity().getSharedPreferences("com.scorpysmurf.recipie2", Context.MODE_PRIVATE);
+        loginType = sharedPreferences.getInt("loginType",0);
+
+        if (loginType == 0) {
+            logoutText.setText(getString(R.string.login));
+        } else {
+            logoutText.setText(getString(R.string.log_out));
+        }
 
         btnEn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +162,19 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                FirebaseAuth.getInstance().signOut();
+                if (user != null) {
+
+                    accessToken = AccessToken.getCurrentAccessToken();
+                    isLoggedIn = accessToken != null && !accessToken.isExpired();
+
+                    if (isLoggedIn) {
+                        LoginManager.getInstance().logOut();
+                    }
+
+                    FirebaseAuth.getInstance().signOut();
+
+                    sharedPreferences.edit().putInt("loginType",0).apply();
+                }
 
                 Intent intent = new Intent(getActivity(), LoginSignupActivity.class);
                 startActivity(intent);

@@ -3,6 +3,7 @@ package com.scorpysmurf.recipie2.loginsignup;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -44,6 +45,8 @@ public class SignupTabFragment extends Fragment {
 
     private FirebaseAuth mAuth;
 
+    SharedPreferences sharedPreferences;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,6 +58,7 @@ public class SignupTabFragment extends Fragment {
         confPassET = root.findViewById(R.id.confirm_password);
         signUp = root.findViewById(R.id.sign_up_button);
         constraintLayout = root.findViewById(R.id.signup_bg);
+        sharedPreferences = getActivity().getSharedPreferences("com.scorpysmurf.recipie2",Context.MODE_PRIVATE);
 
         // ...
         // Initialize Firebase Auth
@@ -116,6 +120,7 @@ public class SignupTabFragment extends Fragment {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("Progress", "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
+                                sharedPreferences.edit().putInt("loginType",1).apply();
                                 nextAct();
                             } else {
                                 // If sign in fails, display a message to the user.

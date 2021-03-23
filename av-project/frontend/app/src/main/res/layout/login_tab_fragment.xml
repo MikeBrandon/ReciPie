@@ -87,4 +87,15 @@
         android:layout_margin="20dp"
         android:gravity="center_horizontal"/>
 
+    <ProgressBar
+        android:id="@+id/prog_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"
+        android:elevation="100dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

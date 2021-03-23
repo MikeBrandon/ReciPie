@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Pair;
@@ -29,6 +30,7 @@ public class LoginSignupActivity extends AppCompatActivity {
     Button skipButton;
     float v=0;
     ConstraintLayout constraintLayout;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class LoginSignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_signup);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        sharedPreferences = getSharedPreferences("com.scorpysmurf.recipie2",Context.MODE_PRIVATE);
 
         if (user != null) {
 
@@ -95,6 +98,8 @@ public class LoginSignupActivity extends AppCompatActivity {
                     pairs[0] = new Pair<View,String>(skipButton,"transition_skip_button");
 
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginSignupActivity.this,pairs);
+
+                    sharedPreferences.edit().putInt("loginType",0).apply();
 
                     startActivity(intent,options.toBundle());
                     finish();

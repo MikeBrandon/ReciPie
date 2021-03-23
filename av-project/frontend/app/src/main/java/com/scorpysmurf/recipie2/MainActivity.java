@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -12,6 +13,9 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 
+import com.facebook.AccessToken;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.scorpysmurf.recipie2.mainactivity.DownloaderFragment;
 import com.scorpysmurf.recipie2.mainactivity.MealsFragment;
@@ -31,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayAdapter titlesArrayAdapter;
     public static ArrayAdapter urlsArrayAdapter;
     ConnectivityBroadcastReceiver connectivityBroadcastReceiver = new ConnectivityBroadcastReceiver();
+    FirebaseUser user;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         chipNavigationBar = findViewById(R.id.bottom_navigation_bar);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        sharedPreferences = getSharedPreferences("com.scorpysmurf.recipie2",MODE_PRIVATE);
 
         getSupportFragmentManager()
                 .beginTransaction()
