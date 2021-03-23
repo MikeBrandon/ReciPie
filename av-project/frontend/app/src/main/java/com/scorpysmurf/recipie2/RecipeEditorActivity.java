@@ -1,13 +1,16 @@
 package com.scorpysmurf.recipie2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -38,6 +41,8 @@ public class RecipeEditorActivity extends AppCompatActivity {
 
     AutoCompleteTextView ingredientText;
 
+    ConstraintLayout constraintLayout;
+
     private static final String[] INGREDIENTS = new String[] {
             "Onions","Tomatoes","Parsley","Apples","Potatoes","Chillies","Black Pepper","Salt", "Chicken", "Wheat Flour", "Eggs", "Sugar", "Red chili flakes" , "Black peppercorns", "Coriander", "Fennel seeds", "Paprika", "Oregano", "Turmeric", "Nutmeg", "Bay leaves", "Cayenne pepper", "Thyme", "Cinnamon", "Bread Crumbs", "Bread", "Bread", "Pasta", "Couscous", "Rice", "All-purpose flour", "Maize Flour", "Baking Soda", "Baking Powder", "White sugar", "Brown sugar", "Powdered sugar", "Yeast", "Beef Stock", "Red Wine", "Chicken Stock", "Milk", "Butter", "Cheese", "Heavy Cream", "Parmesan", "Bacon", "Parsley", "Celery", "Carrots", "Lemons", "Limes", "Oranges", "Orange Juice", "Ketchup", "Mayonnaise", "Olive Oil", "Extra Virgin Olive Oil", "Vegetable Oil", "Canola Oil", "Vinegar", "Mustard", "Honey", "Garlic", "Avocado", "Diced Tomatoes", "Tomato Sauce", "Tomato Paste", "Jam", "Nutella", "Crushed Tomatoes", "Beans", "Coconut Oil", "Peanut Oil", "Cumin", "Vanilla Extract", "Maple Extract", "Mint Extract", "Orange Extract", "White Wine", "Soy Sauce", "Jalapeno", "Feta", "Cheddar", "Mozzarella", "Cream Cheese", "Greek Yogurt", "Low-carb yogurt", "Whipping Cream", "Sour Cream", "Ground Beef", "Pepperoni", "Hot Dogs", "Green Beans", "Pickles", "Cucumber", "Zucchini", "Cauliflower", "Spinach", "Kales", "Cabbages", "Watermelon", "Bananas", "Mushrooms", "Sweet Potatoes", "Irish Potatoes", "Tilapia", "Shrimp", "Octopus", "Oysters", "Blueberries", "Strawberries", "Blackberries", "Raspberries", "Cherries", "Lentils", "Hot Sauce", "Cayenne", "Curry Powder", "Onion Powder", "Garlic Powder", "Chilli Powder", "Shallots", "Ginger", "Anchovy Paste", "capers", "Kosher Salt", "Salsa", "Canned Beans", "Canned Tuna", "Canned Tomatoes", "Cornstarch", "Granulated Sugar"
     };
@@ -61,6 +66,16 @@ public class RecipeEditorActivity extends AppCompatActivity {
         addDirectionBtn = findViewById(R.id.button_add_direction);
         addIngredientBtn = findViewById(R.id.button_add_ingredient);
         saveBtn = findViewById(R.id.button_save);
+
+        constraintLayout = findViewById(R.id.add_recipe_bg);
+
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(),0);
+            }
+        });
 
         directionsAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,directions);
         ingredientsAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,ingredients);

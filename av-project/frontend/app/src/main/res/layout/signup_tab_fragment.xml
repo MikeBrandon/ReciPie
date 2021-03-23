@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/signup_bg">
 
     <EditText
         android:id="@+id/email"
@@ -20,7 +21,8 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingRight="20dp"
-        android:background="@drawable/edit_text_bg"/>
+        android:background="@drawable/edit_text_bg"
+        android:inputType="textEmailAddress"/>
 
     <EditText
         android:id="@+id/password"

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "80711675585",
+    "project_id": "recipie-254",
+    "storage_bucket": "recipie-254.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80711675585:android:32b67835976a708018ee40",
+        "android_client_info": {
+          "package_name": "com.scorpysmurf.recipie2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "80711675585-q33hps2op4eru2sdnmqqlslgfe4hvou7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTcX_l8BLnLFIoqlJiPwsAjWfpRaLbkok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "80711675585-q33hps2op4eru2sdnmqqlslgfe4hvou7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

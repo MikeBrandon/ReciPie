@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/login_bg">
 
     <EditText
         android:id="@+id/email"
@@ -20,7 +21,8 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingRight="20dp"
-        android:background="@drawable/edit_text_bg" />
+        android:background="@drawable/edit_text_bg"
+        android:inputType="textEmailAddress"/>
 
     <EditText
         android:id="@+id/password"
@@ -72,5 +74,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="0" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/fb_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forgot_password"
+        app:layout_constraintVertical_bias="1"
+        android:layout_margin="20dp"
+        android:gravity="center_horizontal"/>
+
+    <ProgressBar
+        android:id="@+id/prog_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"
+        android:elevation="100dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

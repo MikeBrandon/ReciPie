@@ -9,7 +9,7 @@
     <string name="obThreeDescription">Synchronise your pantry, grocery list and recipes automatically using the Meal Planner</string>
     <string name="start">Start</string>
     <string name="skip">Skip</string>
-    <string name="login">Login</string>
+    <string name="login">Log in</string>
     <string name="signup">Sign Up</string>
     <string name="forgot">Forgot Password?</string>
     <string name="email">Email</string>
@@ -87,4 +87,7 @@
     <string name="connected">Connected</string>
     <string name="you_still_have_items">You still have Items in your Grocery List</string>
     <string name="hold_on_the_download_button_to_save_a_page">Hold on the Download Button to Save a Page</string>
+    <string name="log_out"><u>Log Out</u></string>
+    <string name="facebook_app_id" translatable="false">154133226579164</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb154133226579164</string>
 </resources>

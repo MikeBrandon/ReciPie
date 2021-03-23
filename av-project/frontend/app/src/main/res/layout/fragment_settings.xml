@@ -113,7 +113,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintVertical_bias="0.05"
             android:layout_margin="10dp"
             android:textSize="30sp"
             android:text="@string/choose_language"
@@ -131,13 +131,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_en"
-            app:layout_constraintVertical_bias="0.1" />
+            app:layout_constraintVertical_bias="0.05" />
 
         <Button
             android:id="@+id/btn_alarm_1"
-            android:layout_width="125dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="20dp"
             android:fontFamily="@font/poppins"
             android:text="@string/alarm1"
             android:textColor="@color/textonpink"
@@ -145,41 +145,44 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/choose_alarm_text"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintHorizontal_bias="0"/>
 
         <Button
             android:id="@+id/btn_alarm_2"
-            android:layout_width="125dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="20dp"
             android:fontFamily="@font/poppins"
             android:text="@string/alarm2"
             android:textColor="@color/textonpink"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_alarm_1"
+            app:layout_constraintEnd_toStartOf="@+id/btn_alarm_3"
+            app:layout_constraintStart_toEndOf="@+id/btn_alarm_1"
+            app:layout_constraintTop_toBottomOf="@+id/choose_alarm_text"
             app:layout_constraintVertical_bias="0" />
 
         <Button
             android:id="@+id/btn_alarm_3"
-            android:layout_width="125dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="20dp"
             android:fontFamily="@font/poppins"
             android:text="@string/alarm3"
             android:textColor="@color/textonpink"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_alarm_2"
+            app:layout_constraintTop_toBottomOf="@+id/choose_alarm_text"
             app:layout_constraintVertical_bias="0" />
 
         <Button
             android:id="@+id/btn_alarm_4"
-            android:layout_width="125dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="20dp"
             android:fontFamily="@font/poppins"
             android:text="@string/alarm4"
             android:textColor="@color/textonpink"
@@ -188,6 +191,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_alarm_3"
             app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/logout_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:fontFamily="@font/poppins"
+            android:text="@string/log_out"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_alarm_4"
+            app:layout_constraintVertical_bias="0"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

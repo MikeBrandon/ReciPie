@@ -57,7 +57,8 @@
         app:layout_constraintHorizontal_bias=".95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_app_name"
-        android:src="@raw/downloadb1"/>
+        android:src="@raw/downloadb1"
+        app:fabSize="mini" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_home"
@@ -68,7 +69,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias=".05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_app_name" />
+        app:layout_constraintTop_toTopOf="@+id/txt_app_name"
+        app:fabSize="mini" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_refresh"
@@ -79,7 +81,8 @@
         app:layout_constraintEnd_toStartOf="@+id/floating_action_button"
         app:layout_constraintHorizontal_bias=".5"
         app:layout_constraintStart_toEndOf="@+id/txt_app_name"
-        app:layout_constraintTop_toTopOf="@+id/txt_app_name" />
+        app:layout_constraintTop_toTopOf="@+id/txt_app_name"
+        app:fabSize="mini"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"

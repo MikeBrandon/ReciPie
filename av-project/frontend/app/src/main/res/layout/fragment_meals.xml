@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".mainactivity.MealsFragment"
-    android:background="@color/green25">
+    android:background="@color/green25"
+    android:id="@+id/groceries_bg">
 
     <ImageView
         android:id="@+id/bg"
@@ -57,7 +58,8 @@
         app:layout_constraintHorizontal_bias=".95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_app_name"
-        android:src="@android:drawable/ic_menu_delete"/>
+        android:src="@android:drawable/ic_menu_delete"
+        app:fabSize="mini"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"

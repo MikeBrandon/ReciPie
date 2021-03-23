@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -13,19 +16,30 @@ import androidx.fragment.app.Fragment;
 
 import android.transition.TransitionInflater;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.login.LoginManager;
+import com.facebook.login.widget.LoginButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.scorpysmurf.recipie2.LoginSignupActivity;
 import com.scorpysmurf.recipie2.MainActivity;
 import com.scorpysmurf.recipie2.R;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Locale;
-import java.util.Set;
 
 public class SettingsFragment extends Fragment {
 
@@ -35,6 +49,12 @@ public class SettingsFragment extends Fragment {
     Button btnAlm1, btnAlm2, btnAlm3, btnAlm4;
     SharedPreferences sharedPreferences;
     MediaPlayer mediaPlayer;
+    TextView logoutText;
+    int loginType;
+    public static CallbackManager callbackManager;
+    FirebaseUser user;
+    AccessToken accessToken;
+    boolean isLoggedIn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,7 +84,18 @@ public class SettingsFragment extends Fragment {
         btnAlm3 = view.findViewById(R.id.btn_alarm_3);
         btnAlm4 = view.findViewById(R.id.btn_alarm_4);
 
+        logoutText = view.findViewById(R.id.logout_text);
+        callbackManager = CallbackManager.Factory.create();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
         sharedPreferences = getActivity().getSharedPreferences("com.scorpysmurf.recipie2", Context.MODE_PRIVATE);
+        loginType = sharedPreferences.getInt("loginType",0);
+
+        if (loginType == 0) {
+            logoutText.setText(getString(R.string.login));
+        } else {
+            logoutText.setText(getString(R.string.log_out));
+        }
 
         btnEn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +158,31 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        logoutText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (user != null) {
+
+                    accessToken = AccessToken.getCurrentAccessToken();
+                    isLoggedIn = accessToken != null && !accessToken.isExpired();
+
+                    if (isLoggedIn) {
+                        LoginManager.getInstance().logOut();
+                    }
+
+                    FirebaseAuth.getInstance().signOut();
+
+                    sharedPreferences.edit().putInt("loginType",0).apply();
+                }
+
+                Intent intent = new Intent(getActivity(), LoginSignupActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+
+            }
+        });
+
     }
 
     public void setLocale(String lang) {
@@ -139,5 +195,23 @@ public class SettingsFragment extends Fragment {
         Intent refresh = new Intent(getActivity(), MainActivity.class);
         startActivity(refresh);
         getActivity().finish();
+    }
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            Log.e("src",src);
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            Log.e("Bitmap","returned");
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("Exception",e.getMessage());
+            return null;
+        }
     }
 }
