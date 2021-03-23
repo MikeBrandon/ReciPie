@@ -20,15 +20,25 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.scorpysmurf.recipie2.ForgotPasswordActivity;
 import com.scorpysmurf.recipie2.MainActivity;
 import com.scorpysmurf.recipie2.R;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.regex.Pattern;
 
 public class LoginTabFragment extends Fragment {
@@ -39,6 +49,8 @@ public class LoginTabFragment extends Fragment {
     float v = 0;
     ConstraintLayout constraintLayout;
     private FirebaseAuth mAuth;
+    public static CallbackManager callbackManager;
+    LoginButton loginButton;
 
     private final static Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}$");
@@ -53,8 +65,31 @@ public class LoginTabFragment extends Fragment {
         forgotpass = root.findViewById(R.id.forgot_password);
         login = root.findViewById(R.id.loginButton);
         constraintLayout = root.findViewById(R.id.login_bg);
+        loginButton = root.findViewById(R.id.fb_login);
+        callbackManager = CallbackManager.Factory.create();
 
         mAuth = FirebaseAuth.getInstance();
+        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.setPermissions("email", "public_profile");
+        loginButton.setFragment(this);
+
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d("Facebook:", "onSuccess:" + loginResult);
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("Facebook:", "onCancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d("Facebook:", "onError", error);
+            }
+        });
 
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +148,29 @@ public class LoginTabFragment extends Fragment {
         });
 
         return root;
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d("Progress", "handleFacebookAccessToken:" + token);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("Progress", "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            nextAct();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("Progress", "signInWithCredential:failure", task.getException());
+                            Toast.makeText(getActivity(), "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void loginMethod () {
@@ -189,4 +247,11 @@ public class LoginTabFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Pass the activity result back to the Facebook SDK
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
 }

@@ -75,4 +75,16 @@
         app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="0" />
 
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/fb_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forgot_password"
+        app:layout_constraintVertical_bias="1"
+        android:layout_margin="20dp"
+        android:gravity="center_horizontal"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

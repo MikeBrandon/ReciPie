@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.scorpysmurf.recipie2.loginsignup.LoginAdapter;
+import com.scorpysmurf.recipie2.loginsignup.LoginTabFragment;
 
 public class LoginSignupActivity extends AppCompatActivity {
 
@@ -108,5 +109,11 @@ public class LoginSignupActivity extends AppCompatActivity {
             tabLayout.animate().alpha(1).setDuration(1000).setStartDelay(150).start();
 
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        LoginTabFragment.callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

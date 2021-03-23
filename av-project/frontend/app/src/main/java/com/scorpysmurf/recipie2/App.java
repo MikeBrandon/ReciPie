@@ -5,6 +5,9 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
 public class App extends Application {
 
     public static final String CHANNEL_ID = "timerChannel";
@@ -14,6 +17,8 @@ public class App extends Application {
         super.onCreate();
 
         createNotificationChannel();
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
     }
 
     private void createNotificationChannel() {
