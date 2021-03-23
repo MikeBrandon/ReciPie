@@ -1,7 +1,11 @@
 package com.scorpysmurf.recipie2.loginsignup;
 
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Pair;
 import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -10,15 +14,24 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.scorpysmurf.recipie2.LoginSignupActivity;
+import com.scorpysmurf.recipie2.MainActivity;
 import com.scorpysmurf.recipie2.R;
 
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.Executor;
 import java.util.regex.Pattern;
 
 public class SignupTabFragment extends Fragment {
@@ -28,6 +41,8 @@ public class SignupTabFragment extends Fragment {
     private final static Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}$");
     ConstraintLayout constraintLayout;
+
+    private FirebaseAuth mAuth;
 
     @Nullable
     @Override
@@ -40,6 +55,10 @@ public class SignupTabFragment extends Fragment {
         confPassET = root.findViewById(R.id.confirm_password);
         signUp = root.findViewById(R.id.sign_up_button);
         constraintLayout = root.findViewById(R.id.signup_bg);
+
+        // ...
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,11 +96,43 @@ public class SignupTabFragment extends Fragment {
 
     private void signUpMethod () {
 
+        String emailInput = emailET.getText().toString().trim();
+        String passInput = passET.getText().toString().trim();
+
         validEmail();
         validPassword();
         validConfPassword();
         validPhone();
 
+        if (!validEmail() | !validPassword() | !validConfPassword() | !validPhone()) {
+            return;
+        } else {
+
+            mAuth.createUserWithEmailAndPassword(emailInput, passInput)
+                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("Progress", "createUserWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                nextAct();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("Progress", "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(getActivity(), "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+        }
+    }
+
+    private void nextAct() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     private boolean validEmail() {
