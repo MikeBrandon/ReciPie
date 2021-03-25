@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -125,6 +126,21 @@ public class SignupTabFragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+
+                                FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+                                fUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getActivity(), getString(R.string.password_reset), Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("OnFailure: ", e.getMessage());
+                                    }
+                                });
+
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("Progress", "createUserWithEmail:success");
 
