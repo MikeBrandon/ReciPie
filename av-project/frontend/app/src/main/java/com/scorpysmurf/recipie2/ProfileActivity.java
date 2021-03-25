@@ -72,8 +72,13 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                userNameTV.setText(value.getString("uName"));
-                emailTV.setText(value.getString("email"));
+                try {
+                    userNameTV.setText(value.getString("uName"));
+                    emailTV.setText(value.getString("email"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
 
             }
         });
@@ -89,6 +94,13 @@ public class ProfileActivity extends AppCompatActivity {
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                    }
+                });
 
                 if (user != null) {
 

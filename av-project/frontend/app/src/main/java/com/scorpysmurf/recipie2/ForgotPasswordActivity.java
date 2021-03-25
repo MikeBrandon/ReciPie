@@ -1,6 +1,7 @@
 package com.scorpysmurf.recipie2;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
@@ -13,11 +14,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import org.w3c.dom.Document;
+
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
@@ -26,11 +41,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     EditText emailET;
     Button resetBtn;
     FirebaseAuth fAuth;
-
-    private final static Pattern PASSWORD_PATTERN =
-            Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}$");
-
-
+    FirebaseFirestore fStore;
+    String mail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,38 +53,20 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         resetBtn = findViewById(R.id.sign_up_button);
 
         fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
         resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                String text = emailET.getText().toString().trim();
+
                 if (!validEmail()) {
                     return;
                 }
 
-                String mail = emailET.getText().toString().trim();
+                sendEmail(text);
 
-                fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                        successPopup();
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                        if (e instanceof FirebaseAuthException) {
-                            if (((FirebaseAuthException) e).getErrorCode().equals("ERROR_USER_NOT_FOUND")) {
-                                Toast.makeText(ForgotPasswordActivity.this, getString(R.string.user_not_found), Toast.LENGTH_SHORT).show();
-                            }
-
-                            Log.i("ERROR CODE: ", ((FirebaseAuthException) e).getErrorCode());
-
-                        }
-                    }
-                });
             }
         });
     }
@@ -103,5 +97,29 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 finish();
             }
         },5000);
+    }
+
+    private void sendEmail(String text) {
+        fAuth.sendPasswordResetEmail(text).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+                successPopup();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                if (e instanceof FirebaseAuthException) {
+                    if (((FirebaseAuthException) e).getErrorCode().equals("ERROR_USER_NOT_FOUND")) {
+                        Toast.makeText(ForgotPasswordActivity.this, getString(R.string.user_not_found), Toast.LENGTH_SHORT).show();
+                    }
+
+                    Log.i("ERROR CODE: ", ((FirebaseAuthException) e).getErrorCode());
+
+                }
+            }
+        });
     }
 }

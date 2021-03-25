@@ -42,6 +42,8 @@ public class SignupTabFragment extends Fragment {
     Button signUp;
     private final static Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}$");
+    private final static Pattern USERNAME_PATTERN =
+            Pattern.compile("^[A-Za-z][A-Za-z0-9]*$");
     ConstraintLayout constraintLayout;
 
     private FirebaseAuth mAuth;
@@ -229,6 +231,9 @@ public class SignupTabFragment extends Fragment {
 
         if (passInput.isEmpty()) {
             usernameET.setError(getString(R.string.field_cant_be_empty));
+            return false;
+        } else if (!USERNAME_PATTERN.matcher(passInput).matches()) {
+            usernameET.setError(getString(R.string.no_symbol_or_spaces_allowed));
             return false;
         } else {
             usernameET.setError(null);
