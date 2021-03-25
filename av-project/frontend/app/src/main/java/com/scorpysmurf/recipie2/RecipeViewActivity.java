@@ -1,13 +1,9 @@
 package com.scorpysmurf.recipie2;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.slider.Slider;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -241,6 +236,7 @@ public class RecipeViewActivity extends AppCompatActivity {
 
                                 timerServiceIntent = new Intent(RecipeViewActivity.this,TimerService.class);
                                 timerServiceIntent.putExtra("time",slider.getProgress());
+                                timerServiceIntent.putExtra("recipe",name);
                                 startService(timerServiceIntent);
 
                                 countDownTimer = new CountDownTimer(slider.getProgress() * 1000,1000) {

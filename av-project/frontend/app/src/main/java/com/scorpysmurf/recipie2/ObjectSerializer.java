@@ -1,7 +1,5 @@
 package com.scorpysmurf.recipie2;
 
-import android.util.Log;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

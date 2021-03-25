@@ -57,7 +57,7 @@
     <string name="cln">:</string>
     <string name="stop">Stop</string>
     <string name="recipie_timer">ReciPie Timer</string>
-    <string name="recipie_desc">Time is Up!!! Check on Your Food</string>
+    <string name="recipie_desc">Time is Up!!! Check on Your</string>
     <string name="timer_run">You Have a Timer Running Currently</string>
     <string name="field_cant_be_empty">Field can\'t be Empty</string>
     <string name="please_enter_a_valid_email_address">Please Enter a Valid Email Address</string>
@@ -95,4 +95,5 @@
     <string name="user_not_found">User not Found</string>
     <string name="email_already_in_use">Email already in Use</string>
     <string name="incorrect_password">Incorrect Password</string>
+    <string name="food">Food</string>
 </resources>

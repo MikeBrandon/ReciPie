@@ -13,24 +13,21 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
 import android.transition.TransitionInflater;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.scorpysmurf.recipie2.MainActivity;
-import com.scorpysmurf.recipie2.OnlineSavedRecipesActivity;
+import com.scorpysmurf.recipie2.IngredientSuggestions;
 import com.scorpysmurf.recipie2.R;
 import com.scorpysmurf.recipie2.ReminderBroadcastReceiver;
 
@@ -48,12 +45,11 @@ public class MealsFragment extends Fragment {
     FloatingActionButton resetButton;
     AutoCompleteTextView groceryTxt;
     ConstraintLayout constraintLayout;
+    int waitTimeInHours = 18;
 
     SharedPreferences sharedPreferences;
 
-    private static final String[] INGREDIENTS = new String[] {
-        "Onions","Tomatoes","Parsley","Apples","Potatoes","Chillies","Black Pepper","Salt", "Chicken", "Wheat Flour", "Eggs", "Sugar", "Red chili flakes" , "Black peppercorns", "Coriander", "Fennel seeds", "Paprika", "Oregano", "Turmeric", "Nutmeg", "Bay leaves", "Cayenne pepper", "Thyme", "Cinnamon", "Bread Crumbs", "Bread", "Bread", "Pasta", "Couscous", "Rice", "All-purpose flour", "Maize Flour", "Baking Soda", "Baking Powder", "White sugar", "Brown sugar", "Powdered sugar", "Yeast", "Beef Stock", "Red Wine", "Chicken Stock", "Milk", "Butter", "Cheese", "Heavy Cream", "Parmesan", "Bacon", "Parsley", "Celery", "Carrots", "Lemons", "Limes", "Oranges", "Orange Juice", "Ketchup", "Mayonnaise", "Olive Oil", "Extra Virgin Olive Oil", "Vegetable Oil", "Canola Oil", "Vinegar", "Mustard", "Honey", "Garlic", "Avocado", "Diced Tomatoes", "Tomato Sauce", "Tomato Paste", "Jam", "Nutella", "Crushed Tomatoes", "Beans", "Coconut Oil", "Peanut Oil", "Cumin", "Vanilla Extract", "Maple Extract", "Mint Extract", "Orange Extract", "White Wine", "Soy Sauce", "Jalapeno", "Feta", "Cheddar", "Mozzarella", "Cream Cheese", "Greek Yogurt", "Low-carb yogurt", "Whipping Cream", "Sour Cream", "Ground Beef", "Pepperoni", "Hot Dogs", "Green Beans", "Pickles", "Cucumber", "Zucchini", "Cauliflower", "Spinach", "Kales", "Cabbages", "Watermelon", "Bananas", "Mushrooms", "Sweet Potatoes", "Irish Potatoes", "Tilapia", "Shrimp", "Octopus", "Oysters", "Blueberries", "Strawberries", "Blackberries", "Raspberries", "Cherries", "Lentils", "Hot Sauce", "Cayenne", "Curry Powder", "Onion Powder", "Garlic Powder", "Chilli Powder", "Shallots", "Ginger", "Anchovy Paste", "capers", "Kosher Salt", "Salsa", "Canned Beans", "Canned Tuna", "Canned Tomatoes", "Cornstarch", "Granulated Sugar"
-    };
+    private static final String[] INGREDIENTS = IngredientSuggestions.INGRIDIENTS;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,8 +82,12 @@ public class MealsFragment extends Fragment {
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),0);
+                try {
+                    InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -163,19 +163,40 @@ public class MealsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String textGrocery = groceryTxt.getText().toString().trim();
+                addItem();
 
-                if (textGrocery.isEmpty()) {
-                    groceryTxt.setError(getString(R.string.field_cant_be_empty));
-                } else {
-                    groceryArray.add(textGrocery);
-                    arrayAdapter.notifyDataSetChanged();
-                    updateGroceryList();
-
-                    groceryTxt.setText("");
-                }
             }
         });
+
+        groceryTxt.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+
+                    addItem();
+
+                }
+
+                return false;
+            }
+        });
+
+    }
+
+    private void addItem() {
+
+        String textGrocery = groceryTxt.getText().toString().trim();
+
+        if (textGrocery.isEmpty()) {
+            groceryTxt.setError(getString(R.string.field_cant_be_empty));
+        } else {
+            groceryArray.add(textGrocery);
+            arrayAdapter.notifyDataSetChanged();
+            updateGroceryList();
+
+            groceryTxt.setText("");
+        }
 
     }
 
@@ -190,7 +211,7 @@ public class MealsFragment extends Fragment {
 
         long timeAtActivityExit = System.currentTimeMillis();
 
-        long waitTimeMillis = 64800 * 1000;
+        long waitTimeMillis = waitTimeInHours * 3600 * 1000;
 
         alarmManager.set(AlarmManager.RTC_WAKEUP,timeAtActivityExit+waitTimeMillis,pendingIntent);
 

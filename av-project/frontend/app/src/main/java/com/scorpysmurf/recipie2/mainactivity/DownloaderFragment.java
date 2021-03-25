@@ -2,18 +2,14 @@ package com.scorpysmurf.recipie2.mainactivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,17 +21,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.scorpysmurf.recipie2.ConnectivityBroadcastReceiver;
 import com.scorpysmurf.recipie2.MainActivity;
 import com.scorpysmurf.recipie2.OnlineSavedRecipesActivity;
 import com.scorpysmurf.recipie2.R;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashSet;
-import java.util.concurrent.ExecutionException;
 
 public class DownloaderFragment extends Fragment {
     View view;

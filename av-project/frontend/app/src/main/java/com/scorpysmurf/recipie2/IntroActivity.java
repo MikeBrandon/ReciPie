@@ -6,7 +6,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -23,7 +22,6 @@ import com.scorpysmurf.recipie2.onboarding.OnboardingItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class IntroActivity extends AppCompatActivity {
 
