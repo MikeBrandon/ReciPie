@@ -38,7 +38,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    TextView userNameTV, emailTV;
+    TextView userNameTV, emailTV, verifyTV;
     ImageView profilePic;
     Button resetPassBtn, logoutBtn, deleteBtn;
 
@@ -65,12 +65,17 @@ public class ProfileActivity extends AppCompatActivity {
         userNameTV = findViewById(R.id.user_text);
         emailTV = findViewById(R.id.email_text);
         resetPassBtn = findViewById(R.id.reset_pass_button);
+        verifyTV = findViewById(R.id.verify_text);
 
         mAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID = mAuth.getCurrentUser().getUid();
+
+        if (user.isEmailVerified()) {
+            verifyTV.setVisibility(View.GONE);
+        }
 
         documentReference = fStore.collection("users").document(userID);
 
@@ -96,6 +101,26 @@ public class ProfileActivity extends AppCompatActivity {
             deleteBtn.setEnabled(false);
             resetPassBtn.setEnabled(false);
         }
+
+        verifyTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(ProfileActivity.this, getString(R.string.password_reset), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("OnFailure: ", e.getMessage());
+                            }
+                        });
+
+            }
+        });
 
         resetPassBtn.setOnClickListener(new View.OnClickListener() {
             @Override
