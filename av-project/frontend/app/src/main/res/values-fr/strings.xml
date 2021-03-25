@@ -82,7 +82,7 @@
     <string name="new_password">nouveau mot de passe</string>
     <string name="fran_ais">Français</string>
     <string name="reset_password">réinitialiser le mot de passe</string>
-    <string name="password_reset">Réinitialisation du mot de passe</string>
+    <string name="password_reset">Email envoyé</string>
     <string name="match_pass">Les mots de passe ne correspondent pas</string>
     <string name="disconnected">débranché</string>
     <string name="connected">lié</string>
