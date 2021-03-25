@@ -5,12 +5,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,8 +24,11 @@ import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.facebook.share.Share;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -59,6 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
         deleteBtn = findViewById(R.id.delete_button);
         userNameTV = findViewById(R.id.user_text);
         emailTV = findViewById(R.id.email_text);
+        resetPassBtn = findViewById(R.id.reset_pass_button);
 
         mAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -79,7 +85,6 @@ public class ProfileActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
             }
         });
 
@@ -89,7 +94,44 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (loginType == 2) {
             deleteBtn.setEnabled(false);
+            resetPassBtn.setEnabled(false);
         }
+
+        resetPassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetPassBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        FirebaseAuth fAuth = FirebaseAuth.getInstance();
+
+                        fAuth.sendPasswordResetEmail(user.getEmail()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                                successPopup();
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                                if (e instanceof FirebaseAuthException) {
+                                    if (((FirebaseAuthException) e).getErrorCode().equals("ERROR_USER_NOT_FOUND")) {
+                                        Toast.makeText(ProfileActivity.this, getString(R.string.user_not_found), Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    Log.i("ERROR CODE: ", ((FirebaseAuthException) e).getErrorCode());
+
+                                }
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,5 +206,18 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void successPopup() {
+        Dialog dialog = new Dialog(ProfileActivity.this);
+        dialog.setContentView(R.layout.password_reset_popup);
+        dialog.show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        },5000);
     }
 }
