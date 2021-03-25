@@ -15,7 +15,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,11 +38,15 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.util.regex.Pattern;
+
 public class ProfileActivity extends AppCompatActivity {
 
     TextView userNameTV, emailTV, verifyTV;
     ImageView profilePic;
     Button resetPassBtn, logoutBtn, deleteBtn;
+    private final static Pattern PASSWORD_PATTERN =
+            Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}$");
 
     FirebaseUser user;
     FirebaseAuth mAuth;
@@ -125,38 +131,48 @@ public class ProfileActivity extends AppCompatActivity {
         resetPassBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetPassBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
-                        FirebaseAuth fAuth = FirebaseAuth.getInstance();
+                final EditText resetPass = new EditText(v.getContext());
+                resetPass.setInputType(EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
+                final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
+                passwordResetDialog.setTitle(getString(R.string.reset_password));
+                passwordResetDialog.setMessage(getString(R.string.enter_new_password));
+                passwordResetDialog.setTitle(getString(R.string.reset_password));
+                passwordResetDialog.setView(resetPass);
 
-                        fAuth.sendPasswordResetEmail(user.getEmail()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                passwordResetDialog.setPositiveButton(getString(R.string.yes),((dialog, which) -> {
+                    String pass = resetPass.getText().toString();
+
+                    if (!PASSWORD_PATTERN.matcher(pass).matches()) {
+
+                        Toast.makeText(ProfileActivity.this, getString(R.string.weak_pass), Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        user.updatePassword(pass).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-
                                 successPopup();
-
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-
-                                if (e instanceof FirebaseAuthException) {
-                                    if (((FirebaseAuthException) e).getErrorCode().equals("ERROR_USER_NOT_FOUND")) {
-                                        Toast.makeText(ProfileActivity.this, getString(R.string.user_not_found), Toast.LENGTH_SHORT).show();
-                                    }
-
-                                    Log.i("ERROR CODE: ", ((FirebaseAuthException) e).getErrorCode());
-
-                                }
+                                Toast.makeText(ProfileActivity.this, getString(R.string.try_again), Toast.LENGTH_SHORT).show();
                             }
                         });
 
                     }
-                });
+
+                }))
+                        .setNegativeButton(getString(R.string.no),(dialog, which) -> {
+
+                        });
+
+                passwordResetDialog.create().show();
+
             }
         });
+
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,13 +251,13 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void successPopup() {
         Dialog dialog = new Dialog(ProfileActivity.this);
-        dialog.setContentView(R.layout.password_reset_popup);
+        dialog.setContentView(R.layout.password_reset_pop);
         dialog.show();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                finish();
+                dialog.dismiss();
             }
         },5000);
     }

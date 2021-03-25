@@ -104,4 +104,6 @@
     <string name="logged_in">You Are not Logged In</string>
     <string name="no_symbol_or_spaces_allowed">No Special Characters or Spaces Allowed</string>
     <string name="click_to_verify_email">Click to Verify Email</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="password_updated">Password Updated</string>
 </resources>
