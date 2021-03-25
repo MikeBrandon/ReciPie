@@ -55,14 +55,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         logoutBtn = findViewById(R.id.logout_button);
         deleteBtn = findViewById(R.id.delete_button);
-        userNameTV = findViewById(R.id.username);
+        userNameTV = findViewById(R.id.user_text);
         emailTV = findViewById(R.id.email_text);
 
         mAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
-        userID = mAuth.getCurrentUser().getUid();
         user = FirebaseAuth.getInstance().getCurrentUser();
+        userID = mAuth.getCurrentUser().getUid();
 
         DocumentReference documentReference = fStore.collection("users").document(userID);
 
