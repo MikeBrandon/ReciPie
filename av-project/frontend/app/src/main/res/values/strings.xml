@@ -96,4 +96,5 @@
     <string name="email_already_in_use">Email already in Use</string>
     <string name="incorrect_password">Incorrect Password</string>
     <string name="food">Food</string>
+    <string name="username">Username</string>
 </resources>
