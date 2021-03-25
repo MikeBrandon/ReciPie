@@ -183,8 +183,9 @@ public class LoginTabFragment extends Fragment {
         String passInput = pass.getText().toString().trim();
 
         validEmail();
+        validPassword();
 
-        if (!validEmail()) {
+        if (!validEmail() || !validPassword()) {
             return;
         } else {
 
@@ -221,6 +222,18 @@ public class LoginTabFragment extends Fragment {
 
         }
 
+    }
+
+    private boolean validPassword() {
+        String passInput = pass.getText().toString().trim();
+
+        if(passInput.isEmpty()) {
+            pass.setError(getString(R.string.field_cant_be_empty));
+            return false;
+        } else {
+            pass.setError(null);
+            return true;
+        }
     }
 
     private void nextAct() {

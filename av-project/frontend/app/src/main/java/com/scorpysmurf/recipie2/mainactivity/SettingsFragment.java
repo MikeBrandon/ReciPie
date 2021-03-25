@@ -97,9 +97,11 @@ public class SettingsFragment extends Fragment {
 
         if (loginType == 0) {
             logoutText.setText(getString(R.string.login));
-        } else {
+        } else if (loginType == 1){
             logoutText.setText(getString(R.string.log_out));
-
+        } else if (loginType == 2){
+            deleteText.setVisibility(View.GONE);
+            logoutText.setText(getString(R.string.log_out));
         }
 
         btnEn.setOnClickListener(new View.OnClickListener() {
@@ -239,23 +241,5 @@ public class SettingsFragment extends Fragment {
         Intent refresh = new Intent(getActivity(), MainActivity.class);
         startActivity(refresh);
         getActivity().finish();
-    }
-
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            Log.e("src",src);
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            Log.e("Bitmap","returned");
-            return myBitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("Exception",e.getMessage());
-            return null;
-        }
     }
 }

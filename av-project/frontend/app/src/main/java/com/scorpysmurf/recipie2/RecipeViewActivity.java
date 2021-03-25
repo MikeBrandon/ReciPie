@@ -236,6 +236,7 @@ public class RecipeViewActivity extends AppCompatActivity {
 
                                 timerServiceIntent = new Intent(RecipeViewActivity.this,TimerService.class);
                                 timerServiceIntent.putExtra("time",slider.getProgress());
+                                timerServiceIntent.putExtra("recipe",name);
                                 startService(timerServiceIntent);
 
                                 countDownTimer = new CountDownTimer(slider.getProgress() * 1000,1000) {

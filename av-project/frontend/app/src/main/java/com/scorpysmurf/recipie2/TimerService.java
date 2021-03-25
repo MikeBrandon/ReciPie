@@ -27,6 +27,7 @@ public class TimerService extends Service {
         notificationManagerCompat = NotificationManagerCompat.from(this);
 
         int time = intent.getIntExtra("time",0);
+        String name = intent.getStringExtra("recipe");
 
         Intent notificationIntent = new Intent(this,MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,notificationIntent,0);
@@ -35,7 +36,7 @@ public class TimerService extends Service {
 
         Notification notification = builder
                 .setContentTitle(getString(R.string.recipie_timer))
-                .setContentText(getString(R.string.timer_run))
+                .setContentText(getString(R.string.timer_run) + ": " + ((name != null)? name:""))
                 .setSmallIcon(R.raw.timerb1)
                 .setContentIntent(pendingIntent)
                 .build();
@@ -52,7 +53,7 @@ public class TimerService extends Service {
                 Notification notificationComplete = builder
                         .setSmallIcon(R.raw.timerb1)
                         .setContentTitle(getString(R.string.recipie_timer))
-                        .setContentText(getString(R.string.recipie_desc))
+                        .setContentText(getString(R.string.recipie_desc) + " " + ((name != null)? name:(getString(R.string.food))))
                         .setContentIntent(pendingCompleteIntent)
                         .setColor(getColor(R.color.pink100))
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
