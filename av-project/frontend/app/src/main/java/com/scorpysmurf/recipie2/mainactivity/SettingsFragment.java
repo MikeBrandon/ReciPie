@@ -96,6 +96,7 @@ public class SettingsFragment extends Fragment {
         loginType = sharedPreferences.getInt("loginType",0);
 
         if (loginType == 0) {
+            deleteText.setVisibility(View.GONE);
             logoutText.setText(getString(R.string.login));
         } else if (loginType == 1){
             logoutText.setText(getString(R.string.log_out));
