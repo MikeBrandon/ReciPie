@@ -210,9 +210,9 @@ public class LoginTabFragment extends Fragment {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             if (e instanceof FirebaseAuthException) {
-                                if (((FirebaseAuthException) e).getErrorCode() == "ERROR_USER_NOT_FOUND") {
+                                if (((FirebaseAuthException) e).getErrorCode().equals("ERROR_USER_NOT_FOUND")) {
                                     email.setError(getString(R.string.user_not_found));
-                                } else if (((FirebaseAuthException) e).getErrorCode() == "ERROR_WRONG_PASSWORD") {
+                                } else if (((FirebaseAuthException) e).getErrorCode().equals("ERROR_WRONG_PASSWORD")) {
                                     pass.setError(getString(R.string.incorrect_password));
                                 }
 

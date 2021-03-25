@@ -47,6 +47,8 @@ public class ProfileActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     int loginType;
 
+    DocumentReference documentReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID = mAuth.getCurrentUser().getUid();
 
-        DocumentReference documentReference = fStore.collection("users").document(userID);
+        documentReference = fStore.collection("users").document(userID);
 
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -126,19 +128,17 @@ public class ProfileActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             Toast.makeText(ProfileActivity.this, getString(R.string.deleted), Toast.LENGTH_SHORT).show();
+                                            sharedPreferences.edit().putInt("loginType",0).apply();
 
-                                            new Handler().postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
+                                            DocumentReference toDelete = fStore.collection("users").document(userID);
 
-                                                    sharedPreferences.edit().putInt("loginType",0).apply();
+                                            toDelete.delete();
 
-                                                    Intent i = new Intent(new Intent(ProfileActivity.this,LoginSignupActivity.class));
-                                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                    startActivity(i);
+                                            Intent i = new Intent(new Intent(ProfileActivity.this,LoginSignupActivity.class));
+                                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            i.putExtra("deleted",1);
+                                            startActivity(i);
 
-                                                }
-                                            }, 2500);
 
                                         }
                                     });
