@@ -88,6 +88,7 @@
     <string name="you_still_have_items">You still have Items in your Grocery List</string>
     <string name="hold_on_the_download_button_to_save_a_page">Hold on the Download Button to Save a Page</string>
     <string name="log_out"><u>Log Out</u></string>
+    <string name="log_out_bt">Log Out</string>
     <string name="facebook_app_id" translatable="false">154133226579164</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb154133226579164</string>
     <string name="delete_account"><u>Delete Account</u></string>
@@ -97,4 +98,8 @@
     <string name="incorrect_password">Incorrect Password</string>
     <string name="food">Food</string>
     <string name="username">Username</string>
+    <string name="user">User</string>
+    <string name="hello">Hello</string>
+    <string name="profile">Profile</string>
+    <string name="logged_in">You Are not Logged In</string>
 </resources>

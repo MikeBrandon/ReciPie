@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.scorpysmurf.recipie2.LoginSignupActivity;
 import com.scorpysmurf.recipie2.MainActivity;
+import com.scorpysmurf.recipie2.ProfileActivity;
 import com.scorpysmurf.recipie2.R;
 
 import java.io.IOException;
@@ -52,12 +54,13 @@ public class SettingsFragment extends Fragment {
     Button btnAlm1, btnAlm2, btnAlm3, btnAlm4;
     SharedPreferences sharedPreferences;
     MediaPlayer mediaPlayer;
-    TextView logoutText, deleteText;
+    TextView logoutText;
     int loginType;
     public static CallbackManager callbackManager;
     FirebaseUser user;
     AccessToken accessToken;
     boolean isLoggedIn;
+    ImageView profileBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,9 +89,9 @@ public class SettingsFragment extends Fragment {
         btnAlm2 = view.findViewById(R.id.btn_alarm_2);
         btnAlm3 = view.findViewById(R.id.btn_alarm_3);
         btnAlm4 = view.findViewById(R.id.btn_alarm_4);
+        profileBtn = view.findViewById(R.id.profile_pic);
 
         logoutText = view.findViewById(R.id.logout_text);
-        deleteText = view.findViewById(R.id.delete_text);
         callbackManager = CallbackManager.Factory.create();
         user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -96,14 +99,24 @@ public class SettingsFragment extends Fragment {
         loginType = sharedPreferences.getInt("loginType",0);
 
         if (loginType == 0) {
-            deleteText.setVisibility(View.GONE);
             logoutText.setText(getString(R.string.login));
-        } else if (loginType == 1){
-            logoutText.setText(getString(R.string.log_out));
-        } else if (loginType == 2){
-            deleteText.setVisibility(View.GONE);
-            logoutText.setText(getString(R.string.log_out));
+        } else {
+            logoutText.setText(getString(R.string.profile));
         }
+
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                    Toast.makeText(getActivity(), getActivity().getString(R.string.logged_in), Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent i = new Intent(getActivity(), ProfileActivity.class);
+                    startActivity(i);
+                }
+
+            }
+        });
 
         btnEn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,66 +183,17 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (user != null) {
-
-                    accessToken = AccessToken.getCurrentAccessToken();
-                    isLoggedIn = accessToken != null && !accessToken.isExpired();
-
-                    if (isLoggedIn) {
-                        LoginManager.getInstance().logOut();
-                    }
-
-                    FirebaseAuth.getInstance().signOut();
-
-                    sharedPreferences.edit().putInt("loginType",0).apply();
+                if (loginType == 0) {
+                    Intent intent = new Intent(getActivity(), LoginSignupActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                } else {
+                    Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                    startActivity(intent);
                 }
-
-                Intent intent = new Intent(getActivity(), LoginSignupActivity.class);
-                startActivity(intent);
-                getActivity().finish();
 
             }
         });
-
-        deleteText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (user != null) {
-
-                    new AlertDialog.Builder(getActivity())
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setTitle(getActivity().getString(R.string.are_you_sure))
-                            .setMessage(getActivity().getString(R.string.delete_acc))
-                            .setPositiveButton(getActivity().getString(R.string.yes), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            Toast.makeText(getActivity(), getActivity().getString(R.string.deleted), Toast.LENGTH_SHORT).show();
-
-                                            new Handler().postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-
-                                                    Intent intent = new Intent(getActivity(), LoginSignupActivity.class);
-                                                    startActivity(intent);
-                                                    getActivity().finish();
-
-                                                }
-                                            }, 2500);
-                                        }
-                                    });
-                                }
-                            })
-                            .setNegativeButton(getActivity().getString(R.string.no), null)
-                            .show();
-
-                }
-            }
-        });
-
     }
 
     public void setLocale(String lang) {

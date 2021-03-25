@@ -165,6 +165,7 @@ public class LoginTabFragment extends Fragment {
                             FirebaseUser user = mAuth.getCurrentUser();
                             sharedPreferences.edit().putInt("loginType",2).apply();
                             loginButton.setVisibility(View.GONE);
+                            login.setEnabled(false);
                             progressBar.setVisibility(View.VISIBLE);
                             nextAct();
                         } else {

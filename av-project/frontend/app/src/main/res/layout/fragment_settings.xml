@@ -20,6 +20,19 @@
         android:scaleType="centerCrop"
         app:layout_constraintVertical_bias="0"/>
 
+    <ImageView
+        android:id="@+id/profile_pic"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/prof_pic_bg"
+        android:padding="10dp"
+        android:src="@raw/chef"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_app_name" />
+
     <TextView
         android:id="@+id/txt_app_name"
         android:layout_width="wrap_content"
@@ -206,21 +219,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_alarm_4"
             app:layout_constraintVertical_bias="0"/>
-
-        <TextView
-            android:id="@+id/delete_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:fontFamily="@font/poppins"
-            android:text="@string/delete_account"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logout_text"
-            app:layout_constraintVertical_bias="0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

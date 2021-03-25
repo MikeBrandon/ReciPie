@@ -35,6 +35,19 @@
         android:fontFamily="cursive"
         android:textSize="30sp"/>
 
+    <ImageView
+        android:id="@+id/profile_pic"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/prof_pic_bg"
+        android:padding="10dp"
+        android:src="@raw/chef"
+        app:layout_constraintBottom_toBottomOf="@+id/recipes_floating_action_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recipes_floating_action_button" />
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/logo"
         android:layout_width="50dp"
