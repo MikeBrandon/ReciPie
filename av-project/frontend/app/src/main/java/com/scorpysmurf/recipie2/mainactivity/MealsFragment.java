@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -54,8 +55,6 @@ public class MealsFragment extends Fragment {
     AutoCompleteTextView groceryTxt;
     ConstraintLayout constraintLayout;
     int waitTimeInHours = 18;
-    ImageView profileBtn;
-    FirebaseAuth firebaseAuth;
 
     SharedPreferences sharedPreferences;
 
@@ -88,18 +87,6 @@ public class MealsFragment extends Fragment {
         addItemButton = view.findViewById(R.id.button_add_grocery);
         groceryTxt = view.findViewById(R.id.edit_txt_new_grocery);
         constraintLayout = view.findViewById(R.id.groceries_bg);
-        profileBtn = view.findViewById(R.id.profile_pic);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference profileRef = storageReference.child("users/" + firebaseAuth.getCurrentUser().getUid() + "profile.jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(profileBtn);
-            }
-        });
 
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,20 +140,6 @@ public class MealsFragment extends Fragment {
                         .show();
 
                 return true;
-            }
-        });
-
-        profileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                    Toast.makeText(getActivity(), getString(R.string.logged_in), Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent i = new Intent(getActivity(), ProfileActivity.class);
-                    startActivity(i);
-                }
-
             }
         });
 

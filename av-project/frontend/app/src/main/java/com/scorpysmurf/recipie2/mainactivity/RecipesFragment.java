@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -30,7 +31,6 @@ public class RecipesFragment extends Fragment {
     View view;
     FloatingActionButton fabDownloads;
     ImageView btnViewRecipes;
-    ImageView profileBtn;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -55,30 +55,8 @@ public class RecipesFragment extends Fragment {
 
         fabDownloads = view.findViewById(R.id.recipes_floating_action_button);
         btnViewRecipes = view.findViewById(R.id.button_view_recipe);
-        profileBtn = view.findViewById(R.id.profile_pic);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference profileRef = storageReference.child("users/" + firebaseAuth.getCurrentUser().getUid() + "profile.jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(profileBtn);
-            }
-        });
-
-        profileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                    Toast.makeText(getActivity(), getActivity().getString(R.string.logged_in), Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent i = new Intent(getActivity(), ProfileActivity.class);
-                    startActivity(i);
-                }
-            }
-        });
 
         fabDownloads.setOnClickListener(new View.OnClickListener() {
             @Override

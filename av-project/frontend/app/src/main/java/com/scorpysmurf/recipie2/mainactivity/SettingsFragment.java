@@ -35,6 +35,7 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -63,9 +64,6 @@ public class SettingsFragment extends Fragment {
     int loginType;
     public static CallbackManager callbackManager;
     FirebaseUser user;
-    AccessToken accessToken;
-    boolean isLoggedIn;
-    ImageView profileBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,7 +92,6 @@ public class SettingsFragment extends Fragment {
         btnAlm2 = view.findViewById(R.id.btn_alarm_2);
         btnAlm3 = view.findViewById(R.id.btn_alarm_3);
         btnAlm4 = view.findViewById(R.id.btn_alarm_4);
-        profileBtn = view.findViewById(R.id.profile_pic);
 
         logoutText = view.findViewById(R.id.logout_text);
         callbackManager = CallbackManager.Factory.create();
@@ -103,34 +100,11 @@ public class SettingsFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("com.scorpysmurf.recipie2", Context.MODE_PRIVATE);
         loginType = sharedPreferences.getInt("loginType",0);
 
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference profileRef = storageReference.child("users/" + user.getUid() + "profile.jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(profileBtn);
-            }
-        });
-
         if (loginType == 0) {
             logoutText.setText(getString(R.string.login));
         } else {
             logoutText.setText(getString(R.string.profile));
         }
-
-        profileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                    Toast.makeText(getActivity(), getActivity().getString(R.string.logged_in), Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent i = new Intent(getActivity(), ProfileActivity.class);
-                    startActivity(i);
-                }
-
-            }
-        });
 
         btnEn.setOnClickListener(new View.OnClickListener() {
             @Override
