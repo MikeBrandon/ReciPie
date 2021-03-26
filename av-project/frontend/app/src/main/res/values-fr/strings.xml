@@ -62,7 +62,7 @@
     <string name="timer_run">Vous avez une minuterie en cours d\'exécution</string>
     <string name="field_cant_be_empty">Le champ ne peut pas être vide</string>
     <string name="please_enter_a_valid_email_address">S\'il vous plaît, mettez une adresse email valide</string>
-    <string name="weak_pass">Mot de passe trop faible</string>
+    <string name="weak_pass">Le mot de passe doit avoir un chiffre et une lettre</string>
     <string name="short_pass">Le mot de passe doit contenir au moins 6 caractères</string>
     <string name="try_again">Réessayer</string>
     <string name="add_ingredients">Ajouter des ingrédients</string>

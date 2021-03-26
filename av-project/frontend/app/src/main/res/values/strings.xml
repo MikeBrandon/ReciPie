@@ -61,7 +61,7 @@
     <string name="timer_run">You Have a Timer Running Currently</string>
     <string name="field_cant_be_empty">Field can\'t be Empty</string>
     <string name="please_enter_a_valid_email_address">Please Enter a Valid Email Address</string>
-    <string name="weak_pass">Password Too Weak</string>
+    <string name="weak_pass">Password must have a number and letter</string>
     <string name="short_pass">Password must be 6 or More Characters</string>
     <string name="try_again">Try Again</string>
     <string name="add_ingredients">Add Ingredients</string>

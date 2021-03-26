@@ -62,7 +62,7 @@
     <string name="timer_run">Tiene un temporizador funcionando actualmente</string>
     <string name="field_cant_be_empty">El campo no puede estar vacío</string>
     <string name="please_enter_a_valid_email_address">Por favor, introduce una dirección de correo electrónico válida</string>
-    <string name="weak_pass">Contraseña demasiado debil</string>
+    <string name="weak_pass">La contraseña debe tener un número y una letra</string>
     <string name="short_pass">La contraseña debe tener 6 o más caracteres</string>
     <string name="try_again">Intentar otra vez</string>
     <string name="add_ingredients">Agregar ingredientes</string>
