@@ -56,14 +56,7 @@ public class MainActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-            StorageReference profileRef = storageReference.child("users/" + user.getUid() + "profile.jpg");
-            profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Picasso.get().load(uri).into(profileBtn);
-                }
-            });
+            updateImage();
         }
 
         profileBtn.setOnClickListener(new View.OnClickListener() {
@@ -153,4 +146,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        updateImage();
+    }
+
+    private void updateImage() {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference profileRef = storageReference.child("users/" + user.getUid() + "profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(profileBtn);
+            }
+        });
+    }
+
 }
