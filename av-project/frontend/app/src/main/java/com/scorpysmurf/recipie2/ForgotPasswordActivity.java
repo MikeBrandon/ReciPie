@@ -1,27 +1,48 @@
 package com.scorpysmurf.recipie2;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Document;
+
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     Dialog dialog;
-    EditText emailET, passET, confPassET;
+    EditText emailET;
     Button resetBtn;
-
-    private final static Pattern PASSWORD_PATTERN =
-            Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}$");
-
-
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+    String mail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,27 +50,22 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password);
 
         emailET = findViewById(R.id.email);
-        passET = findViewById(R.id.password);
-        confPassET = findViewById(R.id.confirm_password);
         resetBtn = findViewById(R.id.sign_up_button);
+
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
         resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(validEmail() & validPassword() & validConfPassword()) {
-                    dialog = new Dialog(ForgotPasswordActivity.this);
-                    dialog.setContentView(R.layout.password_reset_popup);
-                    dialog.show();
+                String text = emailET.getText().toString().trim();
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            finish();
-                        }
-                    },5000);
-
+                if (!validEmail()) {
+                    return;
                 }
+
+                sendEmail(text);
 
             }
         });
@@ -70,42 +86,40 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validPassword() {
-        String passInput = passET.getText().toString().trim();
+    private void successPopup() {
+        dialog = new Dialog(ForgotPasswordActivity.this);
+        dialog.setContentView(R.layout.password_reset_popup);
+        dialog.show();
 
-        if (passInput.isEmpty()) {
-            passET.setError(getString(R.string.field_cant_be_empty));
-            return false;
-        } else if(passET.length()<6) {
-            passET.setError(getString(R.string.short_pass));
-            return false;
-        } else if(!PASSWORD_PATTERN.matcher(passInput).matches()) {
-            passET.setError(getString(R.string.weak_pass));
-            return false;
-        } else {
-            passET.setError(null);
-            return true;
-        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        },5000);
     }
 
-    private boolean validConfPassword() {
-        String passInput = confPassET.getText().toString().trim();
+    private void sendEmail(String text) {
+        fAuth.sendPasswordResetEmail(text).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
 
-        if (passInput.isEmpty()) {
-            confPassET.setError(getString(R.string.field_cant_be_empty));
-            return false;
-        } else if(confPassET.length()<6) {
-            confPassET.setError(getString(R.string.short_pass));
-            return false;
-        } else if(!confPassET.getText().toString().equals(passET.getText().toString())) {
-            confPassET.setError(getString(R.string.match_pass));
-            return false;
-        } else if(!PASSWORD_PATTERN.matcher(passInput).matches()) {
-            confPassET.setError(getString(R.string.weak_pass));
-            return false;
-        } else {
-            confPassET.setError(null);
-            return true;
-        }
+                successPopup();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                if (e instanceof FirebaseAuthException) {
+                    if (((FirebaseAuthException) e).getErrorCode().equals("ERROR_USER_NOT_FOUND")) {
+                        Toast.makeText(ForgotPasswordActivity.this, getString(R.string.user_not_found), Toast.LENGTH_SHORT).show();
+                    }
+
+                    Log.i("ERROR CODE: ", ((FirebaseAuthException) e).getErrorCode());
+
+                }
+            }
+        });
     }
 }

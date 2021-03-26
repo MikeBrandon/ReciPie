@@ -1,6 +1,7 @@
 package com.scorpysmurf.recipie2.mainactivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -11,17 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.scorpysmurf.recipie2.MyRecipesActivity;
 import com.scorpysmurf.recipie2.OnlineSavedRecipesActivity;
+import com.scorpysmurf.recipie2.ProfileActivity;
 import com.scorpysmurf.recipie2.R;
+import com.squareup.picasso.Picasso;
 
 public class RecipesFragment extends Fragment {
 
     View view;
     FloatingActionButton fabDownloads;
     ImageView btnViewRecipes;
+    FirebaseAuth firebaseAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +55,8 @@ public class RecipesFragment extends Fragment {
 
         fabDownloads = view.findViewById(R.id.recipes_floating_action_button);
         btnViewRecipes = view.findViewById(R.id.button_view_recipe);
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         fabDownloads.setOnClickListener(new View.OnClickListener() {
             @Override

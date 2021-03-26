@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent=".8"
-        app:layout_constraintVertical_bias=".3"
+        app:layout_constraintVertical_bias=".1"
         app:layout_constraintHorizontal_bias=".5"
         android:hint="@string/email"
         android:paddingLeft="20dp"

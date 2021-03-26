@@ -61,8 +61,4 @@ public class Recipe {
     public void setTotalTime(int totalTime) {
         this.totalTime = totalTime;
     }
-
-    public void saveRecipe(String name, String description, String directions, String nutrition, String notes, int rating, int servings, int prep, int cook, int totalTime, SharedPreferences sharedPreferences) {
-
-    }
 }

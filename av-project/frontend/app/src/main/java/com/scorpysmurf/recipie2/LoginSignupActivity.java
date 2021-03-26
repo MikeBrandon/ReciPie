@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +39,12 @@ public class LoginSignupActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         sharedPreferences = getSharedPreferences("com.scorpysmurf.recipie2",Context.MODE_PRIVATE);
+
+        int deleted = getIntent().getIntExtra("deleted",0);
+
+        if (deleted == 1) {
+            Toast.makeText(LoginSignupActivity.this, getString(R.string.deleted), Toast.LENGTH_SHORT).show();
+        }
 
         if (user != null) {
 

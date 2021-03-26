@@ -18,4 +18,6 @@
     <color name="textonpink">#FF5055</color>
     <color name="textonyellow">#FF9B15</color>
     <color name="textongreen">#0CA300</color>
+
+    <color name="greytext">#A9A9A9</color>
 </resources>

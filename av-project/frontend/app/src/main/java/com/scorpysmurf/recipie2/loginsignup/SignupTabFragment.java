@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,25 +22,34 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.scorpysmurf.recipie2.MainActivity;
 import com.scorpysmurf.recipie2.R;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class SignupTabFragment extends Fragment {
 
-    EditText emailET, phoneET, passET, confPassET;
+    EditText emailET, passET, confPassET, usernameET;
     Button signUp;
     private final static Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{6,}$");
+    private final static Pattern USERNAME_PATTERN =
+            Pattern.compile("^[A-Za-z][A-Za-z0-9]*$");
     ConstraintLayout constraintLayout;
 
     private FirebaseAuth mAuth;
+    FirebaseFirestore fStore;
+    String userID;
 
     SharedPreferences sharedPreferences;
 
@@ -49,9 +59,9 @@ public class SignupTabFragment extends Fragment {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.signup_tab_fragment,container,false);
 
         emailET = root.findViewById(R.id.email);
-        phoneET = root.findViewById(R.id.mobile_number);
         passET = root.findViewById(R.id.password);
         confPassET = root.findViewById(R.id.confirm_password);
+        usernameET = root.findViewById(R.id.username);
         signUp = root.findViewById(R.id.sign_up_button);
         constraintLayout = root.findViewById(R.id.signup_bg);
         sharedPreferences = getActivity().getSharedPreferences("com.scorpysmurf.recipie2",Context.MODE_PRIVATE);
@@ -59,6 +69,8 @@ public class SignupTabFragment extends Fragment {
         // ...
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
+        fStore = FirebaseFirestore.getInstance();
 
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,13 +110,14 @@ public class SignupTabFragment extends Fragment {
 
         String emailInput = emailET.getText().toString().trim();
         String passInput = passET.getText().toString().trim();
+        String uNameInput = usernameET.getText().toString().trim();
 
         validEmail();
         validPassword();
         validConfPassword();
-        validPhone();
+        validUsername();
 
-        if (!validEmail() | !validPassword() | !validConfPassword() | !validPhone()) {
+        if (!validEmail() | !validPassword() | !validConfPassword() | !validUsername()) {
             return;
         } else {
 
@@ -113,10 +126,39 @@ public class SignupTabFragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+
+                                FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+                                fUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getActivity(), getString(R.string.password_reset), Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("OnFailure: ", e.getMessage());
+                                    }
+                                });
+
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("Progress", "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
+
+                                userID = mAuth.getCurrentUser().getUid();
+                                DocumentReference documentReference = fStore.collection("users").document(userID);
+                                Map<String,Object> user = new HashMap<>();
+                                user.put("uName",uNameInput);
+                                user.put("email",emailInput);
+
+                                documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("Save Data:","Success");
+                                    }
+                                });
+
                                 sharedPreferences.edit().putInt("loginType",1).apply();
+
                                 nextAct();
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -128,7 +170,7 @@ public class SignupTabFragment extends Fragment {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                         if (e instanceof FirebaseAuthException) {
-                            if (((FirebaseAuthException) e).getErrorCode() == "ERROR_EMAIL_ALREADY_IN_USE") {
+                            if (((FirebaseAuthException) e).getErrorCode().equals("ERROR_EMAIL_ALREADY_IN_USE")) {
                                 emailET.setError(getString(R.string.email_already_in_use));
                             }
 
@@ -200,14 +242,17 @@ public class SignupTabFragment extends Fragment {
         }
     }
 
-    private boolean validPhone() {
-        String passInput = phoneET.getText().toString().trim();
+    private boolean validUsername() {
+        String passInput = usernameET.getText().toString().trim();
 
         if (passInput.isEmpty()) {
-            phoneET.setError(getString(R.string.field_cant_be_empty));
+            usernameET.setError(getString(R.string.field_cant_be_empty));
+            return false;
+        } else if (!USERNAME_PATTERN.matcher(passInput).matches()) {
+            usernameET.setError(getString(R.string.no_symbol_or_spaces_allowed));
             return false;
         } else {
-            phoneET.setError(null);
+            usernameET.setError(null);
             return true;
         }
     }
