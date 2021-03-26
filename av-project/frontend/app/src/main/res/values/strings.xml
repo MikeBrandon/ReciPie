@@ -106,4 +106,6 @@
     <string name="click_to_verify_email">Click to Verify Email</string>
     <string name="enter_new_password">Enter new password</string>
     <string name="password_updated">Password Updated</string>
+    <string name="updated">Updated</string>
+    <string name="click_profile">Tap on Profile Image to Change Profile Picture</string>
 </resources>

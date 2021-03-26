@@ -10,6 +10,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,13 +33,17 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.scorpysmurf.recipie2.LoginSignupActivity;
 import com.scorpysmurf.recipie2.MainActivity;
 import com.scorpysmurf.recipie2.ProfileActivity;
 import com.scorpysmurf.recipie2.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -97,6 +102,15 @@ public class SettingsFragment extends Fragment {
 
         sharedPreferences = getActivity().getSharedPreferences("com.scorpysmurf.recipie2", Context.MODE_PRIVATE);
         loginType = sharedPreferences.getInt("loginType",0);
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference profileRef = storageReference.child("users/" + user.getUid() + "profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(profileBtn);
+            }
+        });
 
         if (loginType == 0) {
             logoutText.setText(getString(R.string.login));

@@ -4,14 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,19 +27,22 @@ import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
-import com.facebook.share.Share;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.regex.Pattern;
 
@@ -55,6 +61,10 @@ public class ProfileActivity extends AppCompatActivity {
     AccessToken accessToken;
     boolean isLoggedIn;
 
+    FloatingActionButton fabHelp;
+
+    StorageReference storageReference, profileRef;
+
     SharedPreferences sharedPreferences;
     int loginType;
 
@@ -72,12 +82,23 @@ public class ProfileActivity extends AppCompatActivity {
         emailTV = findViewById(R.id.email_text);
         resetPassBtn = findViewById(R.id.reset_pass_button);
         verifyTV = findViewById(R.id.verify_text);
+        profilePic = findViewById(R.id.imageView);
+        fabHelp = findViewById(R.id.fab_help);
 
         mAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID = mAuth.getCurrentUser().getUid();
+
+        storageReference = FirebaseStorage.getInstance().getReference();
+        profileRef = storageReference.child("users/" + mAuth.getCurrentUser().getUid() + "profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(profilePic);
+            }
+        });
 
         if (user.isEmailVerified()) {
             verifyTV.setVisibility(View.GONE);
@@ -107,6 +128,25 @@ public class ProfileActivity extends AppCompatActivity {
             deleteBtn.setEnabled(false);
             resetPassBtn.setEnabled(false);
         }
+
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(openGalleryIntent,1000);
+
+            }
+        });
+
+        fabHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(ProfileActivity.this, getString(R.string.click_profile), Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         verifyTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,6 +284,43 @@ public class ProfileActivity extends AppCompatActivity {
 
                 }
 
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1000) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                Uri imageUri = data.getData();
+                uploadImage(imageUri);
+
+            }
+        }
+
+    }
+
+    private void uploadImage(Uri imageUri) {
+
+        StorageReference fileRef = storageReference.child("users/" + mAuth.getCurrentUser().getUid() + "profile.jpg");
+        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(profilePic);
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ProfileActivity.this, getString(R.string.try_again), Toast.LENGTH_SHORT).show();
             }
         });
 

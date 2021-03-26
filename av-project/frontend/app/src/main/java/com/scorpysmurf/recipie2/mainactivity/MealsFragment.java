@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -27,12 +28,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.scorpysmurf.recipie2.IngredientSuggestions;
 import com.scorpysmurf.recipie2.ProfileActivity;
 import com.scorpysmurf.recipie2.R;
 import com.scorpysmurf.recipie2.ReminderBroadcastReceiver;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -50,6 +55,7 @@ public class MealsFragment extends Fragment {
     ConstraintLayout constraintLayout;
     int waitTimeInHours = 18;
     ImageView profileBtn;
+    FirebaseAuth firebaseAuth;
 
     SharedPreferences sharedPreferences;
 
@@ -83,6 +89,17 @@ public class MealsFragment extends Fragment {
         groceryTxt = view.findViewById(R.id.edit_txt_new_grocery);
         constraintLayout = view.findViewById(R.id.groceries_bg);
         profileBtn = view.findViewById(R.id.profile_pic);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference profileRef = storageReference.child("users/" + firebaseAuth.getCurrentUser().getUid() + "profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(profileBtn);
+            }
+        });
 
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override

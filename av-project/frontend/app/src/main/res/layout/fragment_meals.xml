@@ -54,7 +54,6 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/prof_pic_bg"
-        android:padding="10dp"
         android:src="@raw/chef"
         app:layout_constraintBottom_toBottomOf="@+id/fab_clear_groceries"
         app:layout_constraintEnd_toEndOf="parent"
