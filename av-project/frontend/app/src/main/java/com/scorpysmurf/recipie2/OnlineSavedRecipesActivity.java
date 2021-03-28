@@ -1,5 +1,6 @@
 package com.scorpysmurf.recipie2;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -44,6 +47,7 @@ public class OnlineSavedRecipesActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseUser user;
     FirebaseFirestore fStore;
+    ArrayList<String> nameArray, servingsArray, cookArray, prepArray, directionsArray, ingredientsArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +64,7 @@ public class OnlineSavedRecipesActivity extends AppCompatActivity {
         user = fAuth.getCurrentUser();
         fStore = FirebaseFirestore.getInstance();
 
-        documentReference = fStore.collection("users").document(user.getUid());
+        documentReference = fStore.collection("savedPages").document(user.getUid());
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -159,23 +163,20 @@ public class OnlineSavedRecipesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String uName = user.getUid();
-                String email = user.getEmail();
-
                 Map<String,Object> userUploadObject = new HashMap<>();
-                userUploadObject.put("uName",uName);
-                userUploadObject.put("email",email);
 
-                String[] titleArray = MainActivity.urlTitles.toArray(new String[0]);
-                String[] urlArray = MainActivity.urls.toArray(new String[0]);
-
-                userUploadObject.put("urlTitles", titleArray);
-                userUploadObject.put("urls", urlArray);
+                userUploadObject.put("urlTitles", Arrays.asList(MainActivity.urlTitles.toArray(new String[0])));
+                userUploadObject.put("urls", Arrays.asList(MainActivity.urls.toArray(new String[0])));
 
                 documentReference.set(userUploadObject).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(OnlineSavedRecipesActivity.this, getString(R.string.updated), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OnlineSavedRecipesActivity.this, getString(R.string.uploaded), Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(OnlineSavedRecipesActivity.this, getString(R.string.try_again), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -190,26 +191,36 @@ public class OnlineSavedRecipesActivity extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                        MainActivity.urls = (ArrayList<String>) value.get("urls");
-                        MainActivity.urlTitles = (ArrayList<String>) value.get("urlTitles");
+                        ArrayList<String> urlArray = MainActivity.urls;
+                        ArrayList<String> titleArray = MainActivity.urlTitles;
 
-                        MainActivity.urlsArrayAdapter.notifyDataSetChanged();
-                        MainActivity.titlesArrayAdapter.notifyDataSetChanged();
-                        arrayAdapter.notifyDataSetChanged();
+                        try {
 
-                        Intent intent = new Intent(OnlineSavedRecipesActivity.this,OnlineSavedRecipesActivity.class);
+                            MainActivity.urls = (ArrayList<String>) value.get("urls");
+                            MainActivity.urlTitles = (ArrayList<String>) value.get("urlTitles");
+
+                            MainActivity.urlsArrayAdapter.notifyDataSetChanged();
+                            MainActivity.titlesArrayAdapter.notifyDataSetChanged();
+                            arrayAdapter.notifyDataSetChanged();
+
+                            SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2.mainactivity", Context.MODE_PRIVATE);
+                            HashSet<String> urlSet= new HashSet<>(MainActivity.urls);
+                            HashSet<String> titleSet = new HashSet<>(MainActivity.urlTitles);
+
+                            sharedPreferences.edit().putStringSet("urls",urlSet).apply();
+                            sharedPreferences.edit().putStringSet("titles",titleSet).apply();
+                        } catch (Exception e) {
+                            Toast.makeText(OnlineSavedRecipesActivity.this, getText(R.string.you_dont_have_any_saved_recipes), Toast.LENGTH_SHORT).show();
+                            MainActivity.urls = urlArray;
+                            MainActivity.urlTitles = titleArray;
+                        }
+
+                        Intent intent = new Intent(OnlineSavedRecipesActivity.this, OnlineSavedRecipesActivity.class);
                         startActivity(intent);
                         finish();
 
                     }
                 });
-
-                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.scorpysmurf.recipie2.mainactivity", Context.MODE_PRIVATE);
-                HashSet<String> urlSet= new HashSet<>(MainActivity.urls);
-                HashSet<String> titleSet = new HashSet<>(MainActivity.urlTitles);
-
-                sharedPreferences.edit().putStringSet("urls",urlSet).apply();
-                sharedPreferences.edit().putStringSet("titles",titleSet).apply();
 
             }
         });

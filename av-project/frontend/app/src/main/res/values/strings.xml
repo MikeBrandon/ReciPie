@@ -108,4 +108,7 @@
     <string name="password_updated">Password Updated</string>
     <string name="updated">Updated</string>
     <string name="click_profile">Tap on Profile Image to Change Profile Picture</string>
+    <string name="uploaded">Uploaded Successfully</string>
+    <string name="downloaded">Downloaded Successfully</string>
+    <string name="you_dont_have_any_saved_recipes">You don\'t have any Recipes saved Online</string>
 </resources>
