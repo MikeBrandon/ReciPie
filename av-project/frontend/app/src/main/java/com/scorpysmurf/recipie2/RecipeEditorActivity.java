@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -143,18 +144,38 @@ public class RecipeEditorActivity extends AppCompatActivity {
         addIngredientBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ingredients.add(ingredientText.getText().toString().trim());
-                ingredientsAdapter.notifyDataSetChanged();
-                ingredientText.setText("");
+                addIngredient();
+            }
+        });
+
+        addIngredientBtn.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (keyCode == KeyEvent.KEYCODE_ENTER & event.getAction() == KeyEvent.ACTION_DOWN) {
+                    addIngredient();
+                }
+
+                return false;
             }
         });
 
         addDirectionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                directions.add(directionText.getText().toString().trim());
-                directionsAdapter.notifyDataSetChanged();
-                directionText.setText("");
+                addDirection();
+            }
+        });
+
+        addDirectionBtn.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (keyCode == KeyEvent.KEYCODE_ENTER & event.getAction() == KeyEvent.ACTION_DOWN) {
+                    addDirection();
+                }
+
+                return false;
             }
         });
 
@@ -223,6 +244,18 @@ public class RecipeEditorActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void addDirection() {
+        directions.add(directionText.getText().toString().trim());
+        directionsAdapter.notifyDataSetChanged();
+        directionText.setText("");
+    }
+
+    private void addIngredient() {
+        ingredients.add(ingredientText.getText().toString().trim());
+        ingredientsAdapter.notifyDataSetChanged();
+        ingredientText.setText("");
     }
 
     private boolean validName () {

@@ -48,6 +48,30 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="false" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_app_name"
+        app:layout_constraintTop_toTopOf="@+id/txt_app_name"
+        app:layout_constraintHorizontal_bias=".8"
+        android:src="@raw/cloud_upload"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_app_name"
+        app:layout_constraintEnd_toStartOf="@id/fab_upload"
+        app:layout_constraintStart_toEndOf="@+id/txt_app_name"
+        app:layout_constraintTop_toTopOf="@+id/txt_app_name"
+        app:layout_constraintHorizontal_bias=".8"
+        android:src="@raw/cloud_download"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"

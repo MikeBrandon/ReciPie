@@ -190,7 +190,8 @@
                 android:src="@android:drawable/ic_menu_help"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="20dp"/>
+                android:layout_margin="10dp"
+                app:fabSize="mini"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
