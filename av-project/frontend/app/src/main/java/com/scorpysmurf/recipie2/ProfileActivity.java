@@ -97,6 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).into(profilePic);
+                profilePic.setBackground(getDrawable(R.drawable.prof_pic2_bg));
             }
         });
 

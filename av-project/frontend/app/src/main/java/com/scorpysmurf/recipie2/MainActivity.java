@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (user != null) {
             updateImage();
+            profileBtn.setBackground(getDrawable(R.drawable.prof_pic2_bg));
         }
 
         profileBtn.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).into(profileBtn);
+                profileBtn.setBackground(getDrawable(R.drawable.prof_pic2_bg));
             }
         });
     }

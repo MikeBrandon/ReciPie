@@ -248,7 +248,11 @@ public class RecipeEditorActivity extends AppCompatActivity {
 
     private void addDirection() {
         String dirTxt = directionText.getText().toString().trim();
+<<<<<<< Updated upstream
         if (dirTxt == null) {
+=======
+        if (!dirTxt.isEmpty()) {
+>>>>>>> Stashed changes
             directions.add(directionText.getText().toString().trim());
             directionsAdapter.notifyDataSetChanged();
             directionText.setText("");
@@ -259,7 +263,11 @@ public class RecipeEditorActivity extends AppCompatActivity {
 
     private void addIngredient() {
         String ingTxt = ingredientText.getText().toString().trim();
+<<<<<<< Updated upstream
         if (ingTxt == null) {
+=======
+        if (!ingTxt.isEmpty()) {
+>>>>>>> Stashed changes
             ingredients.add(ingredientText.getText().toString().trim());
             ingredientsAdapter.notifyDataSetChanged();
             ingredientText.setText("");
