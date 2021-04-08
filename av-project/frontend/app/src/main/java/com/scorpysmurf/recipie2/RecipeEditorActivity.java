@@ -247,15 +247,25 @@ public class RecipeEditorActivity extends AppCompatActivity {
     }
 
     private void addDirection() {
-        directions.add(directionText.getText().toString().trim());
-        directionsAdapter.notifyDataSetChanged();
-        directionText.setText("");
+        String dirTxt = directionText.getText().toString().trim();
+        if (dirTxt == null) {
+            directions.add(directionText.getText().toString().trim());
+            directionsAdapter.notifyDataSetChanged();
+            directionText.setText("");
+        } else {
+            directionText.setError(getString(R.string.field_cant_be_empty));
+        }
     }
 
     private void addIngredient() {
-        ingredients.add(ingredientText.getText().toString().trim());
-        ingredientsAdapter.notifyDataSetChanged();
-        ingredientText.setText("");
+        String ingTxt = ingredientText.getText().toString().trim();
+        if (ingTxt == null) {
+            ingredients.add(ingredientText.getText().toString().trim());
+            ingredientsAdapter.notifyDataSetChanged();
+            ingredientText.setText("");
+        } else {
+            ingredientText.setError(getString(R.string.field_cant_be_empty));
+        }
     }
 
     private boolean validName () {
